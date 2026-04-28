@@ -116,13 +116,11 @@ public class Shipment implements ShipmentSubject {
         addTrackingRecord("Shipment initialized with full shipment details.");
     }
 
-    public void setStrategy(ShippingStrategy strategy) {
-        if (strategy == null) {
-            throw new NullPointerException("Shipping strategy cannot be null.");
+    public void setStrategy(ShippingStrategy shippingStrategy) {
+        if (shippingStrategy == null) {
+            throw new IllegalArgumentException("Shipping strategy cannot be null.");
         }
-
-        this.shippingStrategy = strategy;
-        addTrackingRecord("Shipping strategy selected.");
+        this.shippingStrategy = shippingStrategy;
     }
 
     public void sendShipmentToRetailer(int shipmentID, int retailerID) {
