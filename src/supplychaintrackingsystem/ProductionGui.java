@@ -623,8 +623,8 @@ public class ProductionGui extends javax.swing.JFrame {
     }//GEN-LAST:event_btnClearActionPerformed
 
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
-         new MainGUI().setVisible(true);
-    this.dispose();
+        new LoginGuii().setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_btnBackActionPerformed
 
     /**

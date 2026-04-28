@@ -140,31 +140,17 @@ public class Shipment implements ShipmentSubject {
     }
 
     public double calculateShippingCost() {
-        validateShipmentData();
-
         if (shippingStrategy == null) {
-            return (distance * 0.5) + (weight * 2.0);
+            throw new IllegalStateException("Shipping strategy must be selected first.");
         }
-
-        return shippingStrategy.calculateShippingCost(this);
+        return shippingStrategy.calculateCost(weight, distance);
     }
 
     public String estimateDeliveryTime() {
-        if (distance <= 0) {
-            throw new IllegalStateException("Distance must be set before estimating delivery time.");
+        if (shippingStrategy == null) {
+            throw new IllegalStateException("Shipping strategy must be selected first.");
         }
-
-        if (shippingStrategy != null) {
-            return shippingStrategy.estimateDeliveryTime(this);
-        }
-
-        if (distance <= 100) {
-            return "1 day";
-        }
-        if (distance <= 500) {
-            return "2-3 days";
-        }
-        return "4-7 days";
+        return shippingStrategy.estimateTime(distance);
     }
 
     public Shipment createShipment(Shipment shipment) {

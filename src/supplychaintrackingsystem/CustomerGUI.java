@@ -357,7 +357,7 @@ public class CustomerGUI extends javax.swing.JFrame {
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
         // TODO add your handling code here:
         this.dispose(); 
-       new LoginGUI().setVisible(true);
+       new LoginGuii().setVisible(true);
     
     }//GEN-LAST:event_btnBackActionPerformed
 
