@@ -8,6 +8,7 @@ import java.util.List;
 public class Shipment implements ShipmentSubject {
 
     private int shipmentID;
+    private int orderID;
     private String origin;
     private String destination;
     private String currentLocation;
@@ -25,6 +26,7 @@ public class Shipment implements ShipmentSubject {
     private String deliveryLocation;
     private String deliveryStatus;
     private String deliveryIssue;
+    private String conditionNotes;
 
     private ShippingStrategy shippingStrategy;
     private final List<ShipmentObserver> shipmentObservers = new ArrayList<>();
@@ -138,17 +140,31 @@ public class Shipment implements ShipmentSubject {
     }
 
     public double calculateShippingCost() {
+        validateShipmentData();
+
         if (shippingStrategy == null) {
-            throw new IllegalStateException("Shipping strategy must be selected first.");
+            return (distance * 0.5) + (weight * 2.0);
         }
-        return shippingStrategy.calculateCost(weight, distance);
+
+        return shippingStrategy.calculateShippingCost(this);
     }
 
     public String estimateDeliveryTime() {
-        if (shippingStrategy == null) {
-            throw new IllegalStateException("Shipping strategy must be selected first.");
+        if (distance <= 0) {
+            throw new IllegalStateException("Distance must be set before estimating delivery time.");
         }
-        return shippingStrategy.estimateTime(distance);
+
+        if (shippingStrategy != null) {
+            return shippingStrategy.estimateDeliveryTime(this);
+        }
+
+        if (distance <= 100) {
+            return "1 day";
+        }
+        if (distance <= 500) {
+            return "2-3 days";
+        }
+        return "4-7 days";
     }
 
     public Shipment createShipment(Shipment shipment) {
@@ -637,6 +653,14 @@ public void setLatestSensorData(SensorData latestSensorData) {
         this.deliveryIssue = deliveryIssue.trim();
     }
 
+    public String getConditionNotes() {
+        return conditionNotes;
+    }
+
+    public void setConditionNotes(String conditionNotes) {
+        this.conditionNotes = conditionNotes == null ? null : conditionNotes.trim();
+    }
+
     public ShippingStrategy getShippingStrategy() {
         return shippingStrategy;
     }
@@ -678,6 +702,18 @@ public void setLatestSensorData(SensorData latestSensorData) {
             throw new NullPointerException("Order cannot be null.");
         }
         this.order = order;
+        this.orderID = order.getOrderID();
+    }
+
+    public int getOrderID() {
+        return orderID;
+    }
+
+    public void setOrderID(int orderID) {
+        if (orderID <= 0) {
+            throw new IllegalArgumentException("Order ID must be positive.");
+        }
+        this.orderID = orderID;
     }
 
     public Customer getCustomer() {
@@ -702,6 +738,14 @@ public void setLatestSensorData(SensorData latestSensorData) {
 
     public void setSupplier(Supplier supplier) {
         this.supplier = supplier;
+    }
+
+    public void setTemperature(double temperature) {
+        this.temperature = temperature;
+    }
+
+    public void setHumidity(double humidity) {
+        this.humidity = humidity;
     }
 
     public Retailer getRetailer() {
