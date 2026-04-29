@@ -110,13 +110,13 @@ public final class AppContext {
             case "retailer":
                 return new RetailerGUI();
             case "distributor":
-                return new DistributorGUI();
+                return new Distributor_GUI();
             case "regulator":
-                return new RegulatorGUI();
+                return new Regulator_GUI();
             case "manufacturer":
                 return new ManufactureGuiii();
             case "logistics":
-                return new LogisticsUI();
+                return new LogisticsGUI();
             case "systemadministrator":
             case "administrator":
                 return new SystemAdmintratorGuii();
