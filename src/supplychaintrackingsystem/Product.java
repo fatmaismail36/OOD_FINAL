@@ -22,6 +22,19 @@ public class Product {
     private final List<Shipment> shipments = new ArrayList<>();
     private final List<ProductionRecord> productionRecords = new ArrayList<>();
     private String issueReport;
+    private int quantity;
+    
+    public int getQuantity() {
+    return quantity;
+}
+
+public void addQuantity(int q) {
+    if (q <= 0) {
+        throw new IllegalArgumentException("Quantity must be positive");
+    }
+    this.quantity += q;
+}
+    
       
     public Product() {
         this.productID = nextProductID++;
