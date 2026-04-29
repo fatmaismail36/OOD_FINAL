@@ -7,6 +7,14 @@ package supplychaintrackingsystem;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+
+
+
+
 /**
  *
  * @author M-ABEER
@@ -767,25 +775,50 @@ public class Regulator_GUI extends javax.swing.JFrame {
     cmbRecordStatus.setSelectedIndex(0);
 }
 
+
 private void populateFromUserController() {
-    User baseUser = resolveLoggedInUser();
 
-    if (baseUser == null) {
-        txtRegulatorID.setText("1");
-        txtAgencyName.setText("Regulatory Authority");
-        txtAccessLevel.setText("Regulator");
-        txtAuditRegion.setText("Cairo");
-        return;
-    }
+    try {
 
-    txtRegulatorID.setText(String.valueOf(baseUser.getUserID()));
-    txtAgencyName.setText(baseUser.getName());
-    txtAccessLevel.setText(baseUser.getRole());
+        User currentUser = AppContext.getCurrentUser();
 
-    if (txtAuditRegion.getText().trim().isEmpty()) {
-        txtAuditRegion.setText("Cairo");
+        if (currentUser == null) {
+            JOptionPane.showMessageDialog(this, "No logged in user found");
+            return;
+        }
+
+        Connection con = DBConnection.connect();
+
+        String sql = "SELECT * FROM users WHERE user_id=? AND role='Regulator'";
+
+        PreparedStatement ps = con.prepareStatement(sql);
+        ps.setInt(1, currentUser.getUserID());
+
+        ResultSet rs = ps.executeQuery();
+
+        if (rs.next()) {
+
+            txtRegulatorID.setText(rs.getString("user_id"));
+            txtAgencyName.setText(rs.getString("full_name"));
+            txtAccessLevel.setText(rs.getString("role"));
+
+            if (rs.getString("distribution_area") != null) {
+                txtAuditRegion.setText(rs.getString("distribution_area"));
+            } else {
+                txtAuditRegion.setText("Cairo");
+            }
+
+        } else {
+            JOptionPane.showMessageDialog(this, "Regulator data not found");
+        }
+
+        con.close();
+
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(this, e.getMessage());
     }
 }
+
 
 private Regulator ensureRegulator() {
     if (currentRegulator != null) {

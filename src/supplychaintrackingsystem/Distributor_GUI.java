@@ -6,6 +6,16 @@ package supplychaintrackingsystem;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import javax.swing.JOptionPane;
+
+
+
+
+
 /**
  *
  * @author M-ABEER
@@ -22,6 +32,10 @@ public Distributor_GUI() {
     configureDefaults();
     populateDistributorProfile();
 }
+
+
+
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -400,48 +414,46 @@ public Distributor_GUI() {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnViewShipmentsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewShipmentsActionPerformed
-      try {
+    try {
         int shipmentID = parseRequiredInt(txtShipmentID.getText(), "Shipment ID");
 
-        Shipment shipment = findShipmentByID(shipmentID);
+        Connection con = DBConnection.connect();
 
-        if (shipment == null) {
-            throw new IllegalArgumentException("Shipment ID was not found.");
-        }
+        String sql = "SELECT * FROM shipments WHERE shipment_id=?";
+        PreparedStatement ps = con.prepareStatement(sql);
+        ps.setInt(1, shipmentID);
 
-        StringBuilder history = new StringBuilder();
+        ResultSet rs = ps.executeQuery();
 
-        if (shipment.getTrackingHistory().isEmpty()) {
-            history.append("No tracking history available.");
+        if (rs.next()) {
+
+            String message =
+                    "Shipment Details\n\n"
+                    + "Shipment ID: " + rs.getInt("shipment_id") + "\n"
+                    + "Order ID: " + rs.getInt("order_id") + "\n"
+                    + "Origin: " + rs.getString("origin") + "\n"
+                    + "Destination: " + rs.getString("destination") + "\n"
+                    + "Current Location: " + rs.getString("current_location") + "\n"
+                    + "Status: " + rs.getString("status");
+
+            JOptionPane.showMessageDialog(this,
+                    message,
+                    "View Shipments",
+                    JOptionPane.INFORMATION_MESSAGE);
+
         } else {
-            for (String record : shipment.getTrackingHistory()) {
-                history.append("- ").append(record).append("\n");
-            }
+            JOptionPane.showMessageDialog(this,
+                    "Shipment not found.");
         }
 
-        String message =
-                "Shipment Details\n"
-                + "Shipment ID: " + shipment.getShipmentID() + "\n"
-                + "Origin: " + shipment.getOrigin() + "\n"
-                + "Destination: " + shipment.getDestination() + "\n"
-                + "Current Location: " + shipment.getCurrentLocation() + "\n"
-                + "Status: " + shipment.getStatus() + "\n\n"
-                + "Tracking History:\n" + history;
+        rs.close();
+        ps.close();
+        con.close();
 
-        JOptionPane.showMessageDialog(this,
-                message,
-                "View Shipments",
-                JOptionPane.INFORMATION_MESSAGE);
-
-    } catch (IllegalArgumentException ex) {
-        JOptionPane.showMessageDialog(this,
-                ex.getMessage(),
-                "Validation Error",
-                JOptionPane.ERROR_MESSAGE);
     } catch (Exception ex) {
         JOptionPane.showMessageDialog(this,
-                "Unexpected error while viewing shipments: " + ex.getMessage(),
-                "Distributor Error",
+                ex.getMessage(),
+                "Error",
                 JOptionPane.ERROR_MESSAGE);
     }
     }//GEN-LAST:event_btnViewShipmentsActionPerformed
@@ -457,45 +469,34 @@ public Distributor_GUI() {
        try {
         int shipmentID = parseRequiredInt(txtShipmentID.getText(), "Shipment ID");
 
-        Shipment shipment = findShipmentByID(shipmentID);
-
-        if (shipment == null) {
-            shipment = createLocalShipmentIfNeeded(shipmentID);
-        }
-
         String issue = JOptionPane.showInputDialog(this, "Enter shipment issue:");
 
         if (issue == null || issue.trim().isEmpty()) {
             throw new IllegalArgumentException("Issue cannot be empty.");
         }
 
-        shipment.setDeliveryIssue(issue.trim());
-        shipment.setStatus("Issue Reported");
+        Connection con = DBConnection.connect();
 
-        currentDistributor.receiveNotification("Shipment " + shipmentID + " issue reported: " + issue.trim());
+        String sql = "INSERT INTO support_requests (customer_id, message, status) VALUES (?, ?, ?)";
 
-        String record =
-                "Shipment Issue Reported\n"
-                + "Shipment ID: " + shipmentID + "\n"
-                + "Issue: " + issue.trim() + "\n"
-                + "Status: " + shipment.getStatus();
+        PreparedStatement ps = con.prepareStatement(sql);
 
-        distributorRecords.add(record);
+        ps.setInt(1, Integer.parseInt(DistributorID.getText()));  
+        ps.setString(2, "Shipment ID: " + shipmentID + " - " + issue);
+        ps.setString(3, "OPEN");
+
+        ps.executeUpdate();
+
+        ps.close();
+        con.close();
 
         JOptionPane.showMessageDialog(this,
-                record,
-                "Report Issue",
-                JOptionPane.WARNING_MESSAGE);
+                "Issue saved in support_requests successfully.");
 
-    } catch (IllegalArgumentException | IllegalStateException ex) {
-        JOptionPane.showMessageDialog(this,
-                ex.getMessage(),
-                "Validation Error",
-                JOptionPane.ERROR_MESSAGE);
     } catch (Exception ex) {
         JOptionPane.showMessageDialog(this,
-                "Unexpected error while reporting issue: " + ex.getMessage(),
-                "Distributor Error",
+                ex.getMessage(),
+                "Error",
                 JOptionPane.ERROR_MESSAGE);
     }
 
@@ -575,45 +576,54 @@ public Distributor_GUI() {
     }//GEN-LAST:event_btnReceiveProductsActionPerformed
 
     private void btnSendProductsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSendProductsActionPerformed
-          try {
+         try {
         int productID = parseRequiredInt(txtProductID.getText(), "Product ID");
         int shipmentID = parseRequiredInt(txtShipmentID.getText(), "Shipment ID");
         String origin = readRequiredText(Origin.getText(), "Origin");
         String destination = readRequiredText(Destination.getText(), "Destination");
 
-        Shipment shipment = createLocalShipmentIfNeeded(shipmentID);
+        Connection con = DBConnection.connect();
 
-        shipment.setOrigin(origin);
-        shipment.setDestination(destination);
-        shipment.updateShipmentStatus(shipmentID, "In Transit");
+        String checkSql = "SELECT shipment_id FROM shipments WHERE shipment_id=?";
+        PreparedStatement checkPs = con.prepareStatement(checkSql);
+        checkPs.setInt(1, shipmentID);
+        ResultSet rs = checkPs.executeQuery();
 
-        currentDistributor.addShipment(shipment);
+        if (rs.next()) {
+            String updateSql = "UPDATE shipments SET origin=?, destination=?, status='IN_TRANSIT', current_location=? WHERE shipment_id=?";
+            PreparedStatement ps = con.prepareStatement(updateSql);
+            ps.setString(1, origin);
+            ps.setString(2, destination);
+            ps.setString(3, origin);
+            ps.setInt(4, shipmentID);
+            ps.executeUpdate();
+            ps.close();
+        } else {
+            String insertSql = "INSERT INTO shipments (shipment_id, order_id, origin, destination, current_location, status) VALUES (?, ?, ?, ?, ?, ?)";
+            PreparedStatement ps = con.prepareStatement(insertSql);
+            ps.setInt(1, shipmentID);
+            ps.setInt(2, productID);
+            ps.setString(3, origin);
+            ps.setString(4, destination);
+            ps.setString(5, origin);
+            ps.setString(6, "IN_TRANSIT");
+            ps.executeUpdate();
+            ps.close();
+        }
 
-        String record =
-                "Products Sent Successfully\n"
-                + "Distributor ID: " + currentDistributor.getUserID() + "\n"
-                + "Product ID: " + productID + "\n"
-                + "Shipment ID: " + shipmentID + "\n"
-                + "Origin: " + origin + "\n"
-                + "Destination: " + destination + "\n"
-                + "Shipment Status: " + shipment.getStatus();
-
-        distributorRecords.add(record);
+        rs.close();
+        checkPs.close();
+        con.close();
 
         JOptionPane.showMessageDialog(this,
-                record,
+                "Shipment saved successfully in database.",
                 "Send Products",
                 JOptionPane.INFORMATION_MESSAGE);
 
-    } catch (IllegalArgumentException | IllegalStateException ex) {
-        JOptionPane.showMessageDialog(this,
-                ex.getMessage(),
-                "Validation Error",
-                JOptionPane.ERROR_MESSAGE);
     } catch (Exception ex) {
         JOptionPane.showMessageDialog(this,
-                "Unexpected error while sending products: " + ex.getMessage(),
-                "Distributor Error",
+                ex.getMessage(),
+                "Error",
                 JOptionPane.ERROR_MESSAGE);
     }
     }//GEN-LAST:event_btnSendProductsActionPerformed
@@ -632,25 +642,52 @@ private void configureDefaults() {
 }
 
 private void populateDistributorProfile() {
-    User currentUser = null;
-
     try {
-        currentUser = AppContext.getCurrentUser();
-    } catch (Exception ex) {
-        currentUser = null;
-    }
+        User currentUser = AppContext.getCurrentUser();
 
-    if (currentUser instanceof Distributor distributor) {
-        currentDistributor = distributor;
-    } else {
-        currentDistributor = new Distributor(
-                1,
-                "Distributor User",
-                "distributor@email.com",
-                "password123",
-                "Distributor",
-                "Cairo Warehouse"
-        );
+        if (currentUser == null) {
+            JOptionPane.showMessageDialog(this, "No logged in user found");
+            return;
+        }
+
+        Connection con = DBConnection.connect();
+
+        String sql = "SELECT * FROM users WHERE user_id=? AND role='Distributor'";
+
+        PreparedStatement ps = con.prepareStatement(sql);
+        ps.setInt(1, currentUser.getUserID());
+
+        ResultSet rs = ps.executeQuery();
+
+        if (rs.next()) {
+
+            DistributorID.setText(rs.getString("user_id"));
+            FullName.setText(rs.getString("full_name"));
+            Email.setText(rs.getString("email"));
+            ContactNumber.setText("0100000000");
+
+            Area.setText(rs.getString("distribution_area"));
+            Status.setText(rs.getString("status"));
+
+            currentDistributor = new Distributor(
+                rs.getInt("user_id"),
+                rs.getString("full_name"),
+                rs.getString("email"),
+                rs.getString("password"),
+                rs.getString("role"),
+                rs.getString("distribution_area")
+            );
+
+        } else {
+            JOptionPane.showMessageDialog(this, "Distributor data not found");
+        }
+
+        rs.close();
+        ps.close();
+        con.close();
+
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(this, e.getMessage());
     }
 
     DistributorID.setText(String.valueOf(currentDistributor.getUserID()));
@@ -660,6 +697,7 @@ private void populateDistributorProfile() {
     Area.setText(currentDistributor.getWarehouseLocation());
     Status.setText("Active");
 }
+
 
 private Shipment createLocalShipmentIfNeeded(int shipmentID) {
     Shipment existingShipment = findShipmentByID(shipmentID);
@@ -800,3 +838,4 @@ private String readRequiredText(String value, String fieldName) {
     private javax.swing.JTextField txtShipmentID;
     // End of variables declaration//GEN-END:variables
 }
+

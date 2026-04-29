@@ -230,6 +230,19 @@ public class LoginGuii extends javax.swing.JFrame {
 
         if (rs.next()) {
 
+            
+            int userId = rs.getInt("user_id");
+            String fullName = rs.getString("full_name");
+            String email = rs.getString("email");
+            String pass = rs.getString("password");
+            String roleDb = rs.getString("role");
+
+            User loggedUser = new User(userId, fullName, email, pass, roleDb);
+
+            AppContext.setCurrentUser(loggedUser);
+            
+            
+            
             JOptionPane.showMessageDialog(this,"Login Successful");
 
             String userRole = rs.getString("role");
@@ -241,10 +254,10 @@ public class LoginGuii extends javax.swing.JFrame {
                 new SupplierGUIii().setVisible(true);
 
             } else if (userRole.equalsIgnoreCase("Distributor")) {
-                new DistributorGUI().setVisible(true);
+                new Distributor_GUI().setVisible(true);
 
             } else if (userRole.equalsIgnoreCase("Regulator")) {
-                new RegulatorGUI().setVisible(true);
+                new Regulator_GUI().setVisible(true);
 
             } else if (userRole.equalsIgnoreCase("Manufacturer")) {
                 new ManufactureGuiii().setVisible(true);
