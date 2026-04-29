@@ -82,14 +82,15 @@
               <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="1" attributes="0">
                   <Group type="102" attributes="0">
-                      <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" attributes="0">
-                      <Component id="fullName" min="-2" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="fullName" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jLabel3" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
                       <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
                       <Component id="UserName" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
@@ -253,9 +254,6 @@
     <Component class="javax.swing.JPasswordField" name="password">
     </Component>
     <Component class="javax.swing.JPasswordField" name="confirmPassword">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="jPasswordField2"/>
-      </Properties>
     </Component>
     <Component class="javax.swing.JComboBox" name="role">
       <Properties>
@@ -266,7 +264,7 @@
             <StringItem index="2" value="Retailer"/>
             <StringItem index="3" value="Distributor"/>
             <StringItem index="4" value="Regulator"/>
-            <StringItem index="5" value="System Administrator"/>
+            <StringItem index="5" value="Admin"/>
           </StringArray>
         </Property>
       </Properties>

@@ -4,6 +4,12 @@
  */
 package supplychaintrackingsystem;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import javax.swing.JOptionPane;
+
+
 /**
  *
  * @author Andrew
@@ -108,9 +114,7 @@ public class SignUpGuiii extends javax.swing.JFrame {
         jLabel9.setForeground(new java.awt.Color(0, 51, 102));
         jLabel9.setText("Role");
 
-        confirmPassword.setText("jPasswordField2");
-
-        role.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Customer", "Supplier", "Retailer", "Distributor", "Regulator", "System Administrator" }));
+        role.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Customer", "Supplier", "Retailer", "Distributor", "Regulator", "Admin" }));
 
         SignUp.setBackground(new java.awt.Color(153, 204, 255));
         SignUp.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -181,13 +185,13 @@ public class SignUpGuiii extends javax.swing.JFrame {
                 .addGap(12, 12, 12)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jLabel4)
                         .addGap(18, 18, 18)
                         .addComponent(jLabel5))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(fullName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(fullName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel3))
                         .addGap(12, 12, 12)
                         .addComponent(UserName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -220,77 +224,85 @@ public class SignUpGuiii extends javax.swing.JFrame {
 
     private void SignUpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SignUpActionPerformed
         try {
-            String fullNameValue = fullName.getText().trim();
-            String usernameValue = UserName.getText().trim();
-            String emailValue = Email.getText().trim();
-            String phoneValue = Phone.getText().trim();
-            String passwordValue = new String(password.getPassword());
-            String confirmPasswordValue = new String(confirmPassword.getPassword());
-            String roleValue = (String) role.getSelectedItem();
+        String fullNameValue = fullName.getText().trim();
+        String usernameValue = UserName.getText().trim();
+        String emailValue = Email.getText().trim();
+        String phoneValue = Phone.getText().trim();
+        String passwordValue = new String(password.getPassword());
+        String confirmPasswordValue = new String(confirmPassword.getPassword());
+        String roleValue = role.getSelectedItem().toString();
 
-            if (fullNameValue.isBlank() || usernameValue.isBlank() || emailValue.isBlank() || phoneValue.isBlank()) {
-                throw new IllegalArgumentException("Please complete all text fields.");
-            }
+        // validation
+        if (fullNameValue.isEmpty() || usernameValue.isEmpty() ||
+            emailValue.isEmpty() || phoneValue.isEmpty() ||
+            passwordValue.isEmpty() || confirmPasswordValue.isEmpty()) {
 
-            if (!fullNameValue.matches("[A-Za-z ]+")) {
-                throw new IllegalArgumentException("Full name must contain letters only.");
-            }
-
-            if (!emailValue.contains("@")) {
-                throw new IllegalArgumentException("Email must contain '@'.");
-            }
-
-            if (!phoneValue.matches("\\d{11}")) {
-                throw new IllegalArgumentException("Phone number must be exactly 11 digits.");
-            }
-
-            if (!passwordValue.equals(confirmPasswordValue)) {
-                throw new IllegalArgumentException("Password and confirm password do not match.");
-            }
-
-            boolean supportedRole = false;
-            for (String supported : AppContext.supportedRoles()) {
-                if (supported.equalsIgnoreCase(roleValue)) {
-                    supportedRole = true;
-                    break;
-                }
-            }
-
-            if (roleValue == null || roleValue.isBlank() || !supportedRole) {
-                throw new IllegalArgumentException("Please select a valid role.");
-            }
-
-            if (DBConnection.connect() == null) {
-                throw new IllegalStateException("MySQL is not running or the database connection settings are wrong.");
-            }
-
-            User user = authBoundary.register(usernameValue, fullNameValue, emailValue, phoneValue, passwordValue, roleValue);
-            if (user == null) {
-                throw new IllegalArgumentException("Account could not be created. Username or email may already exist.");
-            }
-
-            javax.swing.JOptionPane.showMessageDialog(this,
-                    "Account created successfully.",
-                    "Sign Up Complete",
-                    javax.swing.JOptionPane.INFORMATION_MESSAGE);
-            new LoginGuii(authBoundary).setVisible(true);
-            dispose();
-        } catch (IllegalArgumentException ex) {
-            javax.swing.JOptionPane.showMessageDialog(this,
-                    ex.getMessage(),
-                    "Validation Error",
-                    javax.swing.JOptionPane.ERROR_MESSAGE);
-        } catch (IllegalStateException ex) {
-            javax.swing.JOptionPane.showMessageDialog(this,
-                    ex.getMessage(),
-                    "Database Error",
-                    javax.swing.JOptionPane.ERROR_MESSAGE);
-        } catch (Exception ex) {
-            javax.swing.JOptionPane.showMessageDialog(this,
-                    "Unexpected error while creating the account.",
-                    "Sign Up Failed",
-                    javax.swing.JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this,
+                    "Please fill all fields.");
+            return;
         }
+
+        if (!emailValue.contains("@")) {
+            JOptionPane.showMessageDialog(this,
+                    "Invalid email.");
+            return;
+        }
+
+        if (!passwordValue.equals(confirmPasswordValue)) {
+            JOptionPane.showMessageDialog(this,
+                    "Passwords do not match.");
+            return;
+        }
+
+        Connection con = DBConnection.connect();
+
+        // check email already exists
+        String checkSql =
+                "SELECT * FROM users WHERE email=?";
+        PreparedStatement check =
+                con.prepareStatement(checkSql);
+
+        check.setString(1, emailValue);
+
+        ResultSet rs = check.executeQuery();
+
+        if (rs.next()) {
+            JOptionPane.showMessageDialog(this,
+                    "Email already exists.");
+            con.close();
+            return;
+        }
+
+        // insert user
+        String sql =
+        "INSERT INTO users(full_name,email,password,role,status) "
+      + "VALUES(?,?,?,?,?)";
+
+        PreparedStatement ps =
+                con.prepareStatement(sql);
+
+        ps.setString(1, fullNameValue);
+        ps.setString(2, emailValue);
+        ps.setString(3, passwordValue);
+        ps.setString(4, roleValue);
+        ps.setString(5, "Active");
+
+        ps.executeUpdate();
+
+        JOptionPane.showMessageDialog(this,
+                "Account created successfully.");
+
+        con.close();
+
+        new LoginGuii().setVisible(true);
+        this.dispose();
+
+    } catch (Exception e) {
+
+        JOptionPane.showMessageDialog(this,
+                e.getMessage());
+    }
+
     }//GEN-LAST:event_SignUpActionPerformed
 
     private void BackToLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BackToLoginActionPerformed

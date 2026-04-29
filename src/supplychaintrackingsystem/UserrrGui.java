@@ -3,7 +3,10 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package supplychaintrackingsystem;
-
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import javax.swing.JOptionPane;
 
 public class UserrrGui extends javax.swing.JFrame {
 
@@ -11,7 +14,37 @@ public class UserrrGui extends javax.swing.JFrame {
    
     public UserrrGui() {
         initComponents();
+         loadUserData();
     }
+    
+    
+    
+    private void loadUserData() {
+    try {
+        Connection con = DBConnection.connect();
+
+        String sql = "SELECT * FROM users WHERE user_id=?";
+
+        PreparedStatement ps = con.prepareStatement(sql);
+
+        ps.setInt(1, Integer.parseInt(txtUserID.getText().trim()));
+
+        ResultSet rs = ps.executeQuery();
+
+        if (rs.next()) {
+            txtName.setText(rs.getString("full_name"));
+            txtEmail.setText(rs.getString("email"));
+            txtPassword.setText(rs.getString("password"));
+            cmbRole.setSelectedItem(rs.getString("role"));
+        }
+
+        con.close();
+
+    } catch (Exception e) {
+    }
+}
+    
+    
     
     
 private void showActivityLog() {
@@ -163,7 +196,7 @@ private void showActivityLog() {
             }
         });
 
-        cmbRole.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Customer", "Supplier", "Retailer", "Manufacturer", "Administrator", "logistics ", " " }));
+        cmbRole.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Customer", "Supplier", "Retailer", "Manufacturer", "Administrator", "logistics", "Distributior" }));
 
         jLabel4.setText("User ID");
 
@@ -433,21 +466,9 @@ private void showActivityLog() {
 
     private void btnLogoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogoutActionPerformed
         // TODO add your handling code here:
-        
-    try {
-        if (user == null) {
-            javax.swing.JOptionPane.showMessageDialog(this, "Create user first.");
-            return;
-        }
-
-        user.logout();
-        javax.swing.JOptionPane.showMessageDialog(this, "Logged out successfully.");
-        showActivityLog();
-
-    } catch (Exception e) {
-        javax.swing.JOptionPane.showMessageDialog(this, e.getMessage());
-    }
-
+         new LoginGuii().setVisible(true);
+    this.dispose();
+   
     }//GEN-LAST:event_btnLogoutActionPerformed
 
     private void txtNewPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNewPasswordActionPerformed
@@ -455,100 +476,115 @@ private void showActivityLog() {
     }//GEN-LAST:event_txtNewPasswordActionPerformed
 
     private void btnReactivateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReactivateActionPerformed
-        // TODO add your handling code here:
-        
-        
-    try {
-        if (user == null) {
-            javax.swing.JOptionPane.showMessageDialog(this, "Create user first.");
-            return;
-        }
+      
+         try {
 
-        user.reactivateAccount();
-        javax.swing.JOptionPane.showMessageDialog(this, "Account reactivated.");
-        showActivityLog();
+        Connection con = DBConnection.connect();
+
+        String sql =
+        "UPDATE users SET status='Active' WHERE user_id=?";
+
+        PreparedStatement ps = con.prepareStatement(sql);
+
+        ps.setInt(1, Integer.parseInt(txtUserID.getText()));
+
+        ps.executeUpdate();
+
+        JOptionPane.showMessageDialog(this, "Account Reactivated");
+
+        con.close();
 
     } catch (Exception e) {
-        javax.swing.JOptionPane.showMessageDialog(this, e.getMessage());
+        JOptionPane.showMessageDialog(this, e.getMessage());
     }
-
-        
     }//GEN-LAST:event_btnReactivateActionPerformed
 
     private void btnUpdateProfileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateProfileActionPerformed
         // TODO add your handling code here:
        
+   
     try {
-        if (user == null) {
-            int id = Integer.parseInt(txtUserID.getText());
-            String name = txtName.getText();
-            String email = txtEmail.getText();
-            String password = new String(txtPassword.getPassword());
-            String role = cmbRole.getSelectedItem().toString();
 
-            user = new User(id, name, email, password, role);
+        Connection con = DBConnection.connect();
 
-            javax.swing.JOptionPane.showMessageDialog(this, "User created successfully.");
-        } else {
-            user.updateProfile(txtName.getText(), txtEmail.getText());
-            javax.swing.JOptionPane.showMessageDialog(this, "Profile updated successfully.");
-        }
+        String sql =
+        "UPDATE users SET full_name=?, email=?, password=?, role=? WHERE user_id=?";
 
-        showActivityLog();
+        PreparedStatement ps = con.prepareStatement(sql);
+
+        ps.setString(1, txtName.getText());
+        ps.setString(2, txtEmail.getText());
+        ps.setString(3, new String(txtPassword.getPassword()));
+        ps.setString(4, cmbRole.getSelectedItem().toString());
+        ps.setInt(5, Integer.parseInt(txtUserID.getText()));
+
+        ps.executeUpdate();
+
+        JOptionPane.showMessageDialog(this, "Profile Updated");
+
+        con.close();
 
     } catch (Exception e) {
-        javax.swing.JOptionPane.showMessageDialog(this, e.getMessage());
+        JOptionPane.showMessageDialog(this, e.getMessage());
     }
+
 
         
     }//GEN-LAST:event_btnUpdateProfileActionPerformed
 
     private void btnChangePasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnChangePasswordActionPerformed
         // TODO add your handling code here:
-        
-    try {
-        if (user == null) {
-            javax.swing.JOptionPane.showMessageDialog(this, "Create user first.");
-            return;
-        }
+         try {
 
-        String oldPassword = new String(txtOldPassword.getPassword());
-        String newPassword = new String(txtNewPassword.getPassword());
+        Connection con = DBConnection.connect();
 
-        boolean changed = user.changePassword(oldPassword, newPassword);
+        String sql =
+        "UPDATE users SET password=? WHERE user_id=? AND password=?";
 
-        if (changed) {
-            javax.swing.JOptionPane.showMessageDialog(this, "Password changed successfully.");
+        PreparedStatement ps = con.prepareStatement(sql);
+
+        ps.setString(1, new String(txtNewPassword.getPassword()));
+        ps.setInt(2, Integer.parseInt(txtUserID.getText()));
+        ps.setString(3, new String(txtOldPassword.getPassword()));
+
+        int x = ps.executeUpdate();
+
+        if (x > 0) {
+            JOptionPane.showMessageDialog(this, "Password Changed");
         } else {
-            javax.swing.JOptionPane.showMessageDialog(this, "Old password is incorrect.");
+            JOptionPane.showMessageDialog(this, "Old Password Wrong");
         }
 
-        showActivityLog();
+        con.close();
 
     } catch (Exception e) {
-        javax.swing.JOptionPane.showMessageDialog(this, e.getMessage());
+        JOptionPane.showMessageDialog(this, e.getMessage());
     }
+    
 
     }//GEN-LAST:event_btnChangePasswordActionPerformed
 
     private void btnDeactivateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeactivateActionPerformed
-        // TODO add your handling code here:
-        
-    try {
-        if (user == null) {
-            javax.swing.JOptionPane.showMessageDialog(this, "Create user first.");
-            return;
-        }
+       try {
 
-        user.deactivateAccount();
-        javax.swing.JOptionPane.showMessageDialog(this, "Account deactivated.");
-        showActivityLog();
+        Connection con = DBConnection.connect();
+
+        String sql =
+        "UPDATE users SET status='Inactive' WHERE user_id=?";
+
+        PreparedStatement ps = con.prepareStatement(sql);
+
+        ps.setInt(1, Integer.parseInt(txtUserID.getText()));
+
+        ps.executeUpdate();
+
+        JOptionPane.showMessageDialog(this, "Account Deactivated");
+
+        con.close();
 
     } catch (Exception e) {
-        javax.swing.JOptionPane.showMessageDialog(this, e.getMessage());
+        JOptionPane.showMessageDialog(this, e.getMessage());
     }
-
-        
     }//GEN-LAST:event_btnDeactivateActionPerformed
 
     /**

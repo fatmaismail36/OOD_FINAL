@@ -4,6 +4,13 @@
  */
 package supplychaintrackingsystem;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import javax.swing.JOptionPane;
+
+
+
 /**
  *
  * @author Andrew
@@ -196,48 +203,75 @@ public class LoginGuii extends javax.swing.JFrame {
     }//GEN-LAST:event_jComboBox1ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        try {
-            String identifier = Email.getText().trim();
-            String password = new String(Pass.getPassword());
-            String role = (String) jComboBox1.getSelectedItem();
+      try {
 
-            if (identifier.isBlank()) {
-                throw new IllegalArgumentException("Username or email cannot be empty.");
-            }
+        String identifier = Email.getText().trim();
+        String password = new String(Pass.getPassword()).trim();
+        String role = jComboBox1.getSelectedItem().toString();
 
-            if ((identifier.contains(".") || identifier.contains("@")) && !identifier.contains("@")) {
-                throw new IllegalArgumentException("Email must contain '@'.");
-            }
-
-            User user = authBoundary.login(identifier, password, role);
-            if (user == null) {
-                throw new IllegalArgumentException("Invalid username/email, password, or role.");
-            }
-
-            AppContext.setCurrentUser(user);
-            javax.swing.JFrame dashboard = AppContext.createDashboardForRole(user.getRole());
-            if (dashboard == null) {
-                javax.swing.JOptionPane.showMessageDialog(this,
-                        "Login succeeded, but no screen is mapped for role: " + user.getRole(),
-                        "Role Not Mapped",
-                        javax.swing.JOptionPane.WARNING_MESSAGE);
-                return;
-            }
-
-            dashboard.setVisible(true);
-            dispose();
-        } catch (IllegalArgumentException ex) {
-            javax.swing.JOptionPane.showMessageDialog(this,
-                    ex.getMessage(),
-                    "Login Failed",
-                    javax.swing.JOptionPane.ERROR_MESSAGE);
+        if (identifier.isEmpty() || password.isEmpty()) {
+            JOptionPane.showMessageDialog(this,
+            "Please enter email and password.");
+            return;
         }
-        catch (Exception ex) {
-            javax.swing.JOptionPane.showMessageDialog(this,
-                    "Unexpected error while logging in.",
-                    "Login Failed",
-                    javax.swing.JOptionPane.ERROR_MESSAGE);
+
+        Connection con = DBConnection.connect();
+
+        String sql =
+        "SELECT * FROM users WHERE email=? AND password=? AND role=? AND status='Active'";
+
+        PreparedStatement ps = con.prepareStatement(sql);
+
+        ps.setString(1, identifier);
+        ps.setString(2, password);
+        ps.setString(3, role);
+
+        ResultSet rs = ps.executeQuery();
+
+        if (rs.next()) {
+
+            JOptionPane.showMessageDialog(this,"Login Successful");
+
+            String userRole = rs.getString("role");
+
+            if (userRole.equalsIgnoreCase("Customer")) {
+                new CustomerGUI().setVisible(true);
+
+            } else if (userRole.equalsIgnoreCase("Supplier")) {
+                new SupplierGUIii().setVisible(true);
+
+            } else if (userRole.equalsIgnoreCase("Distributor")) {
+                new DistributorGUI().setVisible(true);
+
+            } else if (userRole.equalsIgnoreCase("Regulator")) {
+                new RegulatorGUI().setVisible(true);
+
+            } else if (userRole.equalsIgnoreCase("Manufacturer")) {
+                new ManufactureGuiii().setVisible(true);
+
+            } else if (userRole.equalsIgnoreCase("Retailer")) {
+                new RetailerGUI().setVisible(true);
+
+            } else if (userRole.equalsIgnoreCase("Admin")) {
+                new SystemAdminitratorGuii().setVisible(true);
+            }
+
+            this.dispose();
+
+        } else {
+
+            JOptionPane.showMessageDialog(this,
+            "Wrong data or account is deactivated.");
         }
+
+        rs.close();
+        ps.close();
+        con.close();
+
+    } catch (Exception e) {
+
+        JOptionPane.showMessageDialog(this,e.getMessage());
+    }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void SignUpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SignUpActionPerformed

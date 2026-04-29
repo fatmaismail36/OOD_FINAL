@@ -327,8 +327,8 @@
                 <StringItem index="2" value="Retailer"/>
                 <StringItem index="3" value="Manufacturer"/>
                 <StringItem index="4" value="Administrator"/>
-                <StringItem index="5" value="logistics "/>
-                <StringItem index="6" value=" "/>
+                <StringItem index="5" value="logistics"/>
+                <StringItem index="6" value="Distributior"/>
               </StringArray>
             </Property>
           </Properties>

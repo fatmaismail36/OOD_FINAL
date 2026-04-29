@@ -32,15 +32,11 @@ public class CustomerGUI extends javax.swing.JFrame {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
         CustomerID = new javax.swing.JTextField();
-        txtProductID = new javax.swing.JTextField();
         txtProductName = new javax.swing.JTextField();
         txtQuantity = new javax.swing.JTextField();
-        txtOrderID = new javax.swing.JTextField();
         btnAddCustomer = new javax.swing.JButton();
         btnViewOrders = new javax.swing.JButton();
         btnTrackOrder = new javax.swing.JButton();
@@ -55,50 +51,27 @@ public class CustomerGUI extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel1.setText("Customer ID");
 
-        jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jLabel2.setText("Product ID");
-
         jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel3.setText("Product Name:");
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel4.setText("Quantity:");
 
-        jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jLabel5.setText("Order ID:");
-
-        CustomerID.setText("txtCustomerID");
         CustomerID.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 CustomerIDActionPerformed(evt);
             }
         });
 
-        txtProductID.setText("Product ID");
-        txtProductID.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtProductIDActionPerformed(evt);
-            }
-        });
-
-        txtProductName.setText("Product Name");
         txtProductName.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtProductNameActionPerformed(evt);
             }
         });
 
-        txtQuantity.setText("Quantity");
         txtQuantity.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtQuantityActionPerformed(evt);
-            }
-        });
-
-        txtOrderID.setText("Order ID");
-        txtOrderID.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtOrderIDActionPerformed(evt);
             }
         });
 
@@ -166,14 +139,14 @@ public class CustomerGUI extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(142, 142, 142))
+                .addGap(209, 209, 209))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(26, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(18, 18, 18)
                 .addComponent(jLabel7)
-                .addGap(24, 24, 24))
+                .addContainerGap(32, Short.MAX_VALUE))
         );
 
         btnDelete.setBackground(new java.awt.Color(255, 0, 51));
@@ -190,44 +163,42 @@ public class CustomerGUI extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(33, 33, 33)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtQuantity, javax.swing.GroupLayout.PREFERRED_SIZE, 373, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtOrderID, javax.swing.GroupLayout.PREFERRED_SIZE, 373, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1)
-                            .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtProductName, javax.swing.GroupLayout.PREFERRED_SIZE, 373, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(CustomerID)
-                                .addComponent(txtProductID, javax.swing.GroupLayout.DEFAULT_SIZE, 373, Short.MAX_VALUE)))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(btnAddCustomer)
+                        .addComponent(btnAddCustomer, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnViewOrders, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGap(18, 18, 18)
-                        .addComponent(btnViewOrders)
+                        .addComponent(btnTrackOrder, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(btnTrackOrder)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnClear)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btnDelete)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnBack)
-                        .addGap(26, 26, 26))))
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnBack))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel1)
+                                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(56, 56, 56))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(txtQuantity, javax.swing.GroupLayout.PREFERRED_SIZE, 373, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(104, 104, 104))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(CustomerID, javax.swing.GroupLayout.PREFERRED_SIZE, 373, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtProductName, javax.swing.GroupLayout.PREFERRED_SIZE, 373, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(0, 0, Short.MAX_VALUE)))))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -237,92 +208,53 @@ public class CustomerGUI extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(CustomerID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtProductID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2))
-                .addGap(11, 11, 11)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
                     .addComponent(txtProductName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel4)
                     .addComponent(txtQuantity, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel5)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(txtOrderID, javax.swing.GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnTrackOrder, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(btnAddCustomer)
-                        .addComponent(btnBack)
-                        .addComponent(btnViewOrders)
-                        .addComponent(btnDelete)
-                        .addComponent(btnClear)))
-                .addGap(19, 19, 19))
+                .addGap(52, 52, 52)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnAddCustomer)
+                    .addComponent(btnBack)
+                    .addComponent(btnViewOrders)
+                    .addComponent(btnDelete)
+                    .addComponent(btnClear)
+                    .addComponent(btnTrackOrder))
+                .addContainerGap(39, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void txtProductIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtProductIDActionPerformed
-       
-       try {
-        int productId = Integer.parseInt(txtProductID.getText());
+    private void btnViewOrdersActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewOrdersActionPerformed
+        try {
 
-        Connection con = DBConnection.connect();
-
-        if (con == null) {
-            JOptionPane.showMessageDialog(this, "Database connection failed");
+        if (CustomerID.getText().trim().isEmpty()) {
+            JOptionPane.showMessageDialog(this,
+                    "Please enter Customer ID first");
             return;
         }
 
-        PreparedStatement ps = con.prepareStatement(
-            "SELECT product_name, unit_price, stock_quantity FROM products WHERE product_id = ?"
-        );
-
-        ps.setInt(1, productId);
-
-        ResultSet rs = ps.executeQuery();
-
-        if (rs.next()) {
-            txtProductName.setText(rs.getString("product_name"));
-
-            JOptionPane.showMessageDialog(
-                this,
-                "Price: " + rs.getDouble("unit_price")
-                + "\nStock: " + rs.getInt("stock_quantity")
-            );
-        } else {
-            JOptionPane.showMessageDialog(this, "Product not found");
-            txtProductName.setText("");
-        }
-
-        con.close();
-
-    } catch (Exception e) {
-        JOptionPane.showMessageDialog(this, e.getMessage());
-    }
-    }//GEN-LAST:event_txtProductIDActionPerformed
-
-    private void btnViewOrdersActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewOrdersActionPerformed
-        // TODO add your handling code here:
-        try {
-
-        int customerId = Integer.parseInt(CustomerID.getText());
+        int customerId =
+        Integer.parseInt(CustomerID.getText().trim());
 
         Connection con = DBConnection.connect();
 
         String sql =
-        "SELECT order_id, order_date, status, total_amount " +
-        "FROM orders WHERE customer_id = ?";
+        "SELECT o.order_id, o.order_date, o.status, o.total_amount, " +
+        "p.product_name, oi.quantity, oi.price " +
+        "FROM orders o " +
+        "JOIN order_items oi ON o.order_id = oi.order_id " +
+        "JOIN products p ON oi.product_id = p.product_id " +
+        "WHERE o.customer_id = ? " +
+        "ORDER BY o.order_id DESC";
 
         PreparedStatement ps = con.prepareStatement(sql);
+
         ps.setInt(1, customerId);
 
         ResultSet rs = ps.executeQuery();
@@ -332,26 +264,41 @@ public class CustomerGUI extends javax.swing.JFrame {
         while (rs.next()) {
 
             data += "Order ID: " + rs.getInt("order_id")
-                 + " | Date: " + rs.getString("order_date")
-                 + " | Status: " + rs.getString("status")
-                 + " | Total: " + rs.getDouble("total_amount")
-                 + "\n";
-
+                 + "\nDate: " + rs.getString("order_date")
+                 + "\nStatus: " + rs.getString("status")
+                 + "\nProduct: " + rs.getString("product_name")
+                 + "\nQuantity: " + rs.getInt("quantity")
+                 + "\nPrice: " + rs.getDouble("price")
+                 + "\nTotal: " + rs.getDouble("total_amount")
+                 + "\n--------------------------\n";
         }
 
         if (data.equals("")) {
-            JOptionPane.showMessageDialog(this, "No orders found");
+
+            JOptionPane.showMessageDialog(this,
+                    "You do not have previous orders");
+
         } else {
-            txtOrderID.setText(data);
+
+            JOptionPane.showMessageDialog(this,
+                    data,
+                    "Previous Orders",
+                    JOptionPane.INFORMATION_MESSAGE);
         }
 
         con.close();
 
+    } catch (NumberFormatException e) {
+
+        JOptionPane.showMessageDialog(this,
+                "Customer ID must be a number");
+
     } catch (Exception e) {
 
-        JOptionPane.showMessageDialog(this, e.getMessage());
-
+        JOptionPane.showMessageDialog(this,
+                e.getMessage());
     }
+    
     }//GEN-LAST:event_btnViewOrdersActionPerformed
 
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
@@ -362,151 +309,151 @@ public class CustomerGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_btnBackActionPerformed
 
     private void CustomerIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CustomerIDActionPerformed
-        // TODO add your handling code here:
-         try {
+ try {
 
-        int customerId = Integer.parseInt(CustomerID.getText());
+        if (CustomerID.getText().trim().isEmpty()) {
+            JOptionPane.showMessageDialog(this,
+                    "Please enter Customer ID first");
+            return;
+        }
+
+        int customerId =
+        Integer.parseInt(CustomerID.getText().trim());
 
         Connection con = DBConnection.connect();
 
-        String sql = "SELECT customer_id FROM orders WHERE customer_id = ? LIMIT 1";
+        String sql =
+        "SELECT customer_id FROM orders WHERE customer_id = ? LIMIT 1";
 
-        PreparedStatement ps = con.prepareStatement(sql);
+        PreparedStatement ps =
+        con.prepareStatement(sql);
+
         ps.setInt(1, customerId);
 
         ResultSet rs = ps.executeQuery();
 
         if (rs.next()) {
-            JOptionPane.showMessageDialog(this, "Customer ID found");
+
+            JOptionPane.showMessageDialog(this,
+                    "Customer ID found");
+
         } else {
-            JOptionPane.showMessageDialog(this, "Customer ID not found");
+
+            JOptionPane.showMessageDialog(this,
+                    "Customer ID not found");
         }
 
         con.close();
 
+    } catch (NumberFormatException e) {
+
+        JOptionPane.showMessageDialog(this,
+                "Customer ID must be a number");
+
     } catch (Exception e) {
 
-        JOptionPane.showMessageDialog(this, e.getMessage());
-
+        JOptionPane.showMessageDialog(this,
+                e.getMessage());
     }
     }//GEN-LAST:event_CustomerIDActionPerformed
 
     private void txtProductNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtProductNameActionPerformed
-       
-         try {
+       try {
 
-        String productName = txtProductName.getText().trim();
+        if (txtProductName.getText().trim().isEmpty()) {
+            JOptionPane.showMessageDialog(this,
+                    "Please enter Product Name first");
+            return;
+        }
+
+        String productName =
+        txtProductName.getText().trim();
 
         Connection con = DBConnection.connect();
 
         String sql =
-        "SELECT product_id, unit_price, stock_quantity " +
+        "SELECT unit_price, stock_quantity " +
         "FROM products WHERE product_name = ?";
 
-        PreparedStatement ps = con.prepareStatement(sql);
+        PreparedStatement ps =
+        con.prepareStatement(sql);
+
         ps.setString(1, productName);
 
         ResultSet rs = ps.executeQuery();
 
         if (rs.next()) {
 
-            txtProductID.setText(String.valueOf(rs.getInt("product_id")));
-
             JOptionPane.showMessageDialog(this,
                     "Product Found"
-                    + "\nID: " + rs.getInt("product_id")
+                    + "\nName: " + productName
                     + "\nPrice: " + rs.getDouble("unit_price")
                     + "\nStock: " + rs.getInt("stock_quantity"));
 
         } else {
 
-            JOptionPane.showMessageDialog(this, "Product not found");
-
+            JOptionPane.showMessageDialog(this,
+                    "Product not found");
         }
 
         con.close();
 
     } catch (Exception e) {
 
-        JOptionPane.showMessageDialog(this, e.getMessage());
-
+        JOptionPane.showMessageDialog(this,
+                e.getMessage());
     }
+      
     }//GEN-LAST:event_txtProductNameActionPerformed
 
-    private void txtOrderIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtOrderIDActionPerformed
-         try {
+    private void txtQuantityActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtQuantityActionPerformed
+          try {
 
-        int orderId = Integer.parseInt(txtOrderID.getText());
-
-        Connection con = DBConnection.connect();
-
-        String sql =
-        "SELECT customer_id, order_date, status, total_amount " +
-        "FROM orders WHERE order_id = ?";
-
-        PreparedStatement ps = con.prepareStatement(sql);
-        ps.setInt(1, orderId);
-
-        ResultSet rs = ps.executeQuery();
-
-        if (rs.next()) {
-
-            CustomerID.setText(String.valueOf(rs.getInt("customer_id")));
-
+        if (txtProductName.getText().trim().isEmpty()) {
             JOptionPane.showMessageDialog(this,
-                    "Order Found"
-                    + "\nCustomer ID: " + rs.getInt("customer_id")
-                    + "\nDate: " + rs.getString("order_date")
-                    + "\nStatus: " + rs.getString("status")
-                    + "\nTotal: " + rs.getDouble("total_amount"));
-
-        } else {
-
-            JOptionPane.showMessageDialog(this, "Order not found");
-
+                    "Please enter Product Name first");
+            return;
         }
 
-        con.close();
+        if (txtQuantity.getText().trim().isEmpty()) {
+            JOptionPane.showMessageDialog(this,
+                    "Please enter Quantity");
+            return;
+        }
 
-    } catch (Exception e) {
-
-        JOptionPane.showMessageDialog(this, e.getMessage());
-
-    }
-    }//GEN-LAST:event_txtOrderIDActionPerformed
-
-    private void txtQuantityActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtQuantityActionPerformed
-         try {
-
-        int quantity = Integer.parseInt(txtQuantity.getText());
+        int quantity =
+        Integer.parseInt(txtQuantity.getText().trim());
 
         if (quantity <= 0) {
-            JOptionPane.showMessageDialog(this, "Quantity must be greater than 0");
+            JOptionPane.showMessageDialog(this,
+                    "Quantity must be greater than 0");
             txtQuantity.setText("");
             return;
         }
 
-        if (txtProductID.getText().trim().equals("")) {
-            JOptionPane.showMessageDialog(this, "Enter Product ID first");
-            return;
-        }
-
-        int productId = Integer.parseInt(txtProductID.getText());
+        String productName =
+        txtProductName.getText().trim();
 
         Connection con = DBConnection.connect();
 
         String sql =
-        "SELECT stock_quantity, unit_price FROM products WHERE product_id = ?";
+        "SELECT stock_quantity, unit_price " +
+        "FROM products WHERE product_name = ?";
 
-        PreparedStatement ps = con.prepareStatement(sql);
-        ps.setInt(1, productId);
+        PreparedStatement ps =
+        con.prepareStatement(sql);
+
+        ps.setString(1, productName);
 
         ResultSet rs = ps.executeQuery();
 
         if (rs.next()) {
 
-            int stock = rs.getInt("stock_quantity");
-            double price = rs.getDouble("unit_price");
+            int stock =
+            rs.getInt("stock_quantity");
+
+            double price =
+            rs.getDouble("unit_price");
 
             if (quantity > stock) {
 
@@ -518,65 +465,86 @@ public class CustomerGUI extends javax.swing.JFrame {
                 double total = quantity * price;
 
                 JOptionPane.showMessageDialog(this,
-                        "Available\nTotal Price: " + total);
+                        "Available"
+                        + "\nTotal Price: " + total);
             }
 
         } else {
 
-            JOptionPane.showMessageDialog(this, "Product not found");
-
+            JOptionPane.showMessageDialog(this,
+                    "Product not found");
         }
 
         con.close();
 
+    } catch (NumberFormatException e) {
+
+        JOptionPane.showMessageDialog(this,
+                "Quantity must be a number");
+
     } catch (Exception e) {
 
-        JOptionPane.showMessageDialog(this, e.getMessage());
-
+        JOptionPane.showMessageDialog(this,
+                e.getMessage());
     }
     }//GEN-LAST:event_txtQuantityActionPerformed
 
     private void btnAddCustomerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddCustomerActionPerformed
-        try {
+      try {
 
-        int customerId = Integer.parseInt(CustomerID.getText());
-        int productId = Integer.parseInt(txtProductID.getText());
-        int quantity = Integer.parseInt(txtQuantity.getText());
+        if (CustomerID.getText().trim().isEmpty()
+                || txtProductName.getText().trim().isEmpty()
+                || txtQuantity.getText().trim().isEmpty()) {
+
+            JOptionPane.showMessageDialog(this,
+                    "Please fill all fields first");
+            return;
+        }
+
+        int customerId =
+        Integer.parseInt(CustomerID.getText().trim());
+
+        String productName =
+        txtProductName.getText().trim();
+
+        int quantity =
+        Integer.parseInt(txtQuantity.getText().trim());
 
         Connection con = DBConnection.connect();
 
-        if (con == null) {
-            JOptionPane.showMessageDialog(this, "Database connection failed");
-            return;
-        }
+        String sql =
+        "SELECT product_id, unit_price, stock_quantity " +
+        "FROM products WHERE product_name = ?";
 
-        PreparedStatement ps1 = con.prepareStatement(
-            "SELECT unit_price, stock_quantity FROM products WHERE product_id = ?"
-        );
+        PreparedStatement ps =
+        con.prepareStatement(sql);
 
-        ps1.setInt(1, productId);
+        ps.setString(1, productName);
 
-        ResultSet rs = ps1.executeQuery();
+        ResultSet rs = ps.executeQuery();
 
         if (!rs.next()) {
-            JOptionPane.showMessageDialog(this, "Product not found");
+            JOptionPane.showMessageDialog(this,
+                    "Product not found");
             return;
         }
 
+        int productId = rs.getInt("product_id");
         double price = rs.getDouble("unit_price");
         int stock = rs.getInt("stock_quantity");
 
         if (quantity > stock) {
-            JOptionPane.showMessageDialog(this, "Not enough stock");
+            JOptionPane.showMessageDialog(this,
+                    "Not enough stock");
             return;
         }
 
-        double total = price * quantity;
+        double total = quantity * price;
 
-        PreparedStatement ps2 = con.prepareStatement(
-            "INSERT INTO orders (customer_id, status, total_amount) VALUES (?, ?, ?)",
-            Statement.RETURN_GENERATED_KEYS
-        );
+        PreparedStatement ps2 =
+        con.prepareStatement(
+        "INSERT INTO orders(customer_id,status,total_amount) VALUES(?,?,?)",
+        Statement.RETURN_GENERATED_KEYS);
 
         ps2.setInt(1, customerId);
         ps2.setString(2, "Pending");
@@ -592,9 +560,9 @@ public class CustomerGUI extends javax.swing.JFrame {
             orderId = keys.getInt(1);
         }
 
-        PreparedStatement ps3 = con.prepareStatement(
-            "INSERT INTO order_items (order_id, product_id, quantity, price) VALUES (?, ?, ?, ?)"
-        );
+        PreparedStatement ps3 =
+        con.prepareStatement(
+        "INSERT INTO order_items(order_id,product_id,quantity,price) VALUES(?,?,?,?)");
 
         ps3.setInt(1, orderId);
         ps3.setInt(2, productId);
@@ -603,160 +571,192 @@ public class CustomerGUI extends javax.swing.JFrame {
 
         ps3.executeUpdate();
 
-        PreparedStatement ps4 = con.prepareStatement(
-            "UPDATE products SET stock_quantity = stock_quantity - ? WHERE product_id = ?"
-        );
+        PreparedStatement ps4 =
+        con.prepareStatement(
+        "UPDATE products SET stock_quantity = stock_quantity - ? WHERE product_id=?");
 
         ps4.setInt(1, quantity);
         ps4.setInt(2, productId);
 
         ps4.executeUpdate();
 
-        txtOrderID.setText(String.valueOf(orderId));
-
-        JOptionPane.showMessageDialog(this, "Order created successfully");
+        JOptionPane.showMessageDialog(this,
+                "Order Created Successfully"
+                + "\nOrder ID: " + orderId
+                + "\nTotal: " + total);
 
         con.close();
 
     } catch (Exception e) {
 
-        JOptionPane.showMessageDialog(this, e.getMessage());
-
+        JOptionPane.showMessageDialog(this,
+                e.getMessage());
     }
     }//GEN-LAST:event_btnAddCustomerActionPerformed
 
     private void btnTrackOrderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTrackOrderActionPerformed
-      try {
+        try {
 
-        int orderId = Integer.parseInt(txtOrderID.getText());
+        if (CustomerID.getText().trim().isEmpty()) {
+            JOptionPane.showMessageDialog(this,
+                    "Please enter Customer ID first");
+            return;
+        }
+
+        int customerId =
+        Integer.parseInt(CustomerID.getText().trim());
 
         Connection con = DBConnection.connect();
 
         String sql =
-        "SELECT order_id, customer_id, order_date, status, total_amount " +
-        "FROM orders WHERE order_id = ?";
+        "SELECT o.order_id, o.order_date, o.status, o.total_amount, " +
+        "p.product_name, oi.quantity " +
+        "FROM orders o " +
+        "JOIN order_items oi ON o.order_id = oi.order_id " +
+        "JOIN products p ON oi.product_id = p.product_id " +
+        "WHERE o.customer_id = ? " +
+        "ORDER BY o.order_id DESC LIMIT 1";
 
-        PreparedStatement ps = con.prepareStatement(sql);
-        ps.setInt(1, orderId);
+        PreparedStatement ps =
+        con.prepareStatement(sql);
+
+        ps.setInt(1, customerId);
 
         ResultSet rs = ps.executeQuery();
 
         if (rs.next()) {
 
-            CustomerID.setText(String.valueOf(rs.getInt("customer_id")));
-
             JOptionPane.showMessageDialog(this,
-                    "Order Tracking"
+                    "Latest Order Tracking"
                     + "\nOrder ID: " + rs.getInt("order_id")
-                    + "\nCustomer ID: " + rs.getInt("customer_id")
                     + "\nDate: " + rs.getString("order_date")
+                    + "\nProduct: " + rs.getString("product_name")
+                    + "\nQuantity: " + rs.getInt("quantity")
                     + "\nStatus: " + rs.getString("status")
                     + "\nTotal: " + rs.getDouble("total_amount"));
 
         } else {
 
-            JOptionPane.showMessageDialog(this, "Order not found");
-
+            JOptionPane.showMessageDialog(this,
+                    "No orders found for this customer");
         }
 
         con.close();
 
     } catch (Exception e) {
 
-        JOptionPane.showMessageDialog(this, e.getMessage());
-
+        JOptionPane.showMessageDialog(this,
+                e.getMessage());
     }
+
     }//GEN-LAST:event_btnTrackOrderActionPerformed
 
     private void btnClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClearActionPerformed
-        CustomerID.setText("");
-    txtProductID.setText("");
+      
+    if (CustomerID.getText().trim().isEmpty()
+            && txtProductName.getText().trim().isEmpty()
+            && txtQuantity.getText().trim().isEmpty()) {
+
+        JOptionPane.showMessageDialog(this,
+                "There is nothing to clear");
+        return;
+    }
+
+    CustomerID.setText("");
     txtProductName.setText("");
     txtQuantity.setText("");
-    txtOrderID.setText("");
 
     CustomerID.requestFocus();
 
-    JOptionPane.showMessageDialog(this, "Fields cleared");
+    JOptionPane.showMessageDialog(this,
+            "Fields cleared");
 
 
     }//GEN-LAST:event_btnClearActionPerformed
 
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
-      try {
+    
+        try {
 
-        int orderId = Integer.parseInt(txtOrderID.getText().trim());
-
-        Connection con = DBConnection.connect();
-
-        if (con == null) {
-            JOptionPane.showMessageDialog(this, "Database connection failed");
-            return;
-        }
-
-        PreparedStatement check = con.prepareStatement(
-            "SELECT order_id FROM orders WHERE order_id = ?"
-        );
-        check.setInt(1, orderId);
-
-        ResultSet rs = check.executeQuery();
-
-        if (!rs.next()) {
-            JOptionPane.showMessageDialog(this, "Order not found");
-            con.close();
-            return;
-        }
-
-        int confirm = JOptionPane.showConfirmDialog(
-                this,
-                "Delete Order ID " + orderId + " ?",
-                "Confirm Delete",
-                JOptionPane.YES_NO_OPTION
-        );
-
-        if (confirm != JOptionPane.YES_OPTION) {
-            con.close();
-            return;
-        }
-
-        PreparedStatement ps1 = con.prepareStatement(
-            "DELETE FROM order_items WHERE order_id = ?"
-        );
-        ps1.setInt(1, orderId);
-        ps1.executeUpdate();
-
-        PreparedStatement ps2 = con.prepareStatement(
-            "DELETE FROM orders WHERE order_id = ?"
-        );
-        ps2.setInt(1, orderId);
-
-        int rows = ps2.executeUpdate();
-
-        if (rows > 0) {
-
-            JOptionPane.showMessageDialog(this,
-                    "Order deleted successfully");
-
-            CustomerID.setText("");
-            txtOrderID.setText("");
-            txtProductID.setText("");
-            txtProductName.setText("");
-            txtQuantity.setText("");
-
-        } else {
-
-            JOptionPane.showMessageDialog(this,
-                    "Delete failed");
-
-        }
-
-        con.close();
-
-    } catch (Exception e) {
-
-        JOptionPane.showMessageDialog(this, e.getMessage());
-
+    if (CustomerID.getText().trim().isEmpty()) {
+        JOptionPane.showMessageDialog(this,
+                "Please enter Customer ID first");
+        return;
     }
+
+    int customerId =
+    Integer.parseInt(CustomerID.getText().trim());
+
+    Connection con = DBConnection.connect();
+
+    PreparedStatement check =
+    con.prepareStatement(
+    "SELECT order_id FROM orders WHERE customer_id=? ORDER BY order_id DESC LIMIT 1");
+
+    check.setInt(1, customerId);
+
+    ResultSet rs = check.executeQuery();
+
+    if (!rs.next()) {
+        JOptionPane.showMessageDialog(this,
+                "No orders found for this customer");
+        con.close();
+        return;
+    }
+
+    int orderId = rs.getInt("order_id");
+
+    int confirm = JOptionPane.showConfirmDialog(
+            this,
+            "Delete latest order ID " + orderId + " ?",
+            "Confirm Delete",
+            JOptionPane.YES_NO_OPTION
+    );
+
+    if (confirm != JOptionPane.YES_OPTION) {
+        con.close();
+        return;
+    }
+
+    PreparedStatement ps1 =
+    con.prepareStatement(
+    "DELETE FROM order_items WHERE order_id=?");
+
+    ps1.setInt(1, orderId);
+    ps1.executeUpdate();
+
+    PreparedStatement ps2 =
+    con.prepareStatement(
+    "DELETE FROM orders WHERE order_id=?");
+
+    ps2.setInt(1, orderId);
+
+    int rows = ps2.executeUpdate();
+
+    if (rows > 0) {
+
+        JOptionPane.showMessageDialog(this,
+                "Order deleted successfully");
+
+        CustomerID.setText("");
+        txtProductName.setText("");
+        txtQuantity.setText("");
+
+    } else {
+
+        JOptionPane.showMessageDialog(this,
+                "Delete failed");
+    }
+
+    con.close();
+
+} catch (Exception e) {
+
+    JOptionPane.showMessageDialog(this,
+            e.getMessage());
+}
+        
+        
     }//GEN-LAST:event_btnDeleteActionPerformed
 
     /**
@@ -803,14 +803,10 @@ public class CustomerGUI extends javax.swing.JFrame {
     private javax.swing.JButton btnTrackOrder;
     private javax.swing.JButton btnViewOrders;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JTextField txtOrderID;
-    private javax.swing.JTextField txtProductID;
     private javax.swing.JTextField txtProductName;
     private javax.swing.JTextField txtQuantity;
     // End of variables declaration//GEN-END:variables

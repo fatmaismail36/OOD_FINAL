@@ -3,15 +3,42 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package supplychaintrackingsystem;
-
+import java.sql.*;
+import javax.swing.JOptionPane;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import javax.swing.JOptionPane;
 /**
  *
- * @author zeina
+ * 
  */
 public class InventoryGUI extends javax.swing.JFrame {
     private final InventoryBoundary inventoryBoundary;
     private final Product productContext;
 
+    
+    private boolean validateFields() {
+
+    if (
+         txtProductID.getText().trim().isEmpty()
+        || txtWarehouseLocation.getText().trim().isEmpty()
+        || txtCurrentQuantity.getText().trim().isEmpty()
+        || txtAddQuantity.getText().trim().isEmpty()) {
+
+        javax.swing.JOptionPane.showMessageDialog(
+            this,
+            "Please fill all Inventory Details and Stock Control fields.",
+            "Missing Data",
+            javax.swing.JOptionPane.WARNING_MESSAGE
+        );
+
+        return false;
+    }
+
+    return true;
+}
+    
     /**
      * Creates new form InventoryGUI
      */
@@ -32,8 +59,55 @@ public class InventoryGUI extends javax.swing.JFrame {
         this.productContext = product;
         initComponents();
         prefillFromProduct();
+        txtLastUpdated.setEditable(false);
+        txtLastUpdated.setFocusable(false);
     }
+    
+    
+    private void loadInventoryByProductID(int productId) {
 
+    try (Connection con = DBConnection.connect()) {
+
+        String sql =
+        "SELECT * FROM inventory WHERE product_id=?";
+
+        PreparedStatement ps =
+                con.prepareStatement(sql);
+
+        ps.setInt(1, productId);
+
+        ResultSet rs = ps.executeQuery();
+
+        if (rs.next()) {
+
+            txtProductID.setText(rs.getString("product_id"));
+            txtWarehouseLocation.setText(
+                    rs.getString("warehouse_location"));
+
+            txtCurrentQuantity.setText(
+                    rs.getString("quantity"));
+
+            txtLastUpdated.setText(
+                    rs.getString("last_updated"));
+
+            cmbStockCondition.setSelectedItem(
+                    rs.getString("stock_condition"));
+        }
+
+    } catch (Exception e) {
+
+        JOptionPane.showMessageDialog(this,
+                e.getMessage());
+    }
+}
+    
+
+    private boolean isEmpty(javax.swing.JTextField txt) {
+    return txt.getText().trim().isEmpty();
+}
+    
+    
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -46,34 +120,27 @@ public class InventoryGUI extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
-        jLabel2 = new javax.swing.JLabel();
-        txtInventoryID = new javax.swing.JTextField();
         txtProductID = new javax.swing.JTextField();
-        txtProductName = new javax.swing.JTextField();
         txtWarehouseLocation = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
         txtCurrentQuantity = new javax.swing.JTextField();
         txtAddQuantity = new javax.swing.JTextField();
-        txtMinimumStockLevel = new javax.swing.JTextField();
+        txtProductName = new javax.swing.JTextField();
         txtLastUpdated = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
-        jLabel10 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
-        cmbAvailability = new javax.swing.JComboBox<>();
         cmbStockCondition = new javax.swing.JComboBox<>();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTextArea1 = new javax.swing.JTextArea();
         btnAddStock = new javax.swing.JButton();
         btnUpdateStock = new javax.swing.JButton();
-        btnCheckAvailability = new javax.swing.JButton();
         btnDetectLowStock = new javax.swing.JButton();
         btnClear = new javax.swing.JButton();
         btnBack = new javax.swing.JButton();
@@ -105,14 +172,8 @@ public class InventoryGUI extends javax.swing.JFrame {
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Inventory Item Details", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 12), new java.awt.Color(153, 0, 255))); // NOI18N
 
-        jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jLabel2.setText("Inventory ID:");
-
         jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel3.setText("Product ID:");
-
-        jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jLabel4.setText("Product Name:");
 
         jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel5.setText("Warehouse Location:");
@@ -126,50 +187,27 @@ public class InventoryGUI extends javax.swing.JFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGap(206, 206, 206))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel5)
-                                    .addComponent(jLabel4))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanel2Layout.createSequentialGroup()
-                                        .addComponent(txtWarehouseLocation, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(0, 0, Short.MAX_VALUE))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                                        .addGap(0, 0, Short.MAX_VALUE)
-                                        .addComponent(txtProductName, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGap(0, 0, Short.MAX_VALUE)
-                                .addComponent(txtProductID, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
-                                .addComponent(jLabel2)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(txtInventoryID, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(43, 43, 43))))
+                        .addGap(43, 43, 43)
+                        .addComponent(txtProductID, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(43, 43, 43))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jLabel5)
+                        .addGap(18, 18, 18)
+                        .addComponent(txtWarehouseLocation, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(txtInventoryID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
                     .addComponent(txtProductID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(9, 9, 9)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel4)
-                    .addComponent(txtProductName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(9, 9, 9)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtWarehouseLocation, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel5))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jLabel5)
+                    .addComponent(txtWarehouseLocation, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(17, Short.MAX_VALUE))
         );
 
         jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Stock Control", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 12), new java.awt.Color(102, 204, 0))); // NOI18N
@@ -200,7 +238,7 @@ public class InventoryGUI extends javax.swing.JFrame {
                         .addGap(45, 45, 45)
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(txtLastUpdated, javax.swing.GroupLayout.DEFAULT_SIZE, 120, Short.MAX_VALUE)
-                            .addComponent(txtMinimumStockLevel)))
+                            .addComponent(txtProductName)))
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.TRAILING)
@@ -225,7 +263,7 @@ public class InventoryGUI extends javax.swing.JFrame {
                 .addGap(9, 9, 9)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel8)
-                    .addComponent(txtMinimumStockLevel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtProductName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(9, 9, 9)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtLastUpdated, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -234,25 +272,14 @@ public class InventoryGUI extends javax.swing.JFrame {
 
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Stock Status Monitor", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 12), new java.awt.Color(0, 102, 255))); // NOI18N
 
-        jLabel10.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jLabel10.setText("Availability:");
-
         jLabel11.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel11.setText("Stock Condition: ");
 
         jLabel12.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel12.setText("Low Stock Alert / Notes:");
 
-        cmbAvailability.setForeground(new java.awt.Color(102, 204, 0));
-        cmbAvailability.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Available", "Not Available", "Checking" }));
-        cmbAvailability.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cmbAvailabilityActionPerformed(evt);
-            }
-        });
-
         cmbStockCondition.setForeground(new java.awt.Color(51, 204, 0));
-        cmbStockCondition.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "In Stock", "Low Stock", "Out of Stock", "Overstocked" }));
+        cmbStockCondition.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Good", "Damaged", "Expired" }));
 
         jTextArea1.setColumns(20);
         jTextArea1.setForeground(new java.awt.Color(102, 102, 102));
@@ -269,37 +296,23 @@ public class InventoryGUI extends javax.swing.JFrame {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(jLabel11)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(cmbStockCondition, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 257, Short.MAX_VALUE)
-                            .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanel3Layout.createSequentialGroup()
-                                        .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(cmbAvailability, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addComponent(jLabel12))
-                                .addGap(0, 0, Short.MAX_VALUE)))
-                        .addContainerGap())))
+                        .addGap(18, 18, 18)
+                        .addComponent(cmbStockCondition, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel12))
+                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 269, Short.MAX_VALUE)
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(3, 3, 3)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel10)
-                    .addComponent(cmbAvailability, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(42, 42, 42)
+                .addGap(17, 17, 17)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel11)
                     .addComponent(cmbStockCondition, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(47, 47, 47)
+                .addGap(18, 18, 18)
                 .addComponent(jLabel12)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -307,19 +320,19 @@ public class InventoryGUI extends javax.swing.JFrame {
         btnAddStock.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnAddStock.setForeground(new java.awt.Color(242, 242, 242));
         btnAddStock.setText("Add Stock");
+        btnAddStock.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAddStockActionPerformed(evt);
+            }
+        });
 
         btnUpdateStock.setBackground(new java.awt.Color(33, 150, 243));
         btnUpdateStock.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnUpdateStock.setForeground(new java.awt.Color(242, 242, 242));
         btnUpdateStock.setText("Update Stock");
-
-        btnCheckAvailability.setBackground(new java.awt.Color(255, 152, 0));
-        btnCheckAvailability.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        btnCheckAvailability.setForeground(new java.awt.Color(242, 242, 242));
-        btnCheckAvailability.setText("Check Availability");
-        btnCheckAvailability.addActionListener(new java.awt.event.ActionListener() {
+        btnUpdateStock.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnCheckAvailabilityActionPerformed(evt);
+                btnUpdateStockActionPerformed(evt);
             }
         });
 
@@ -327,6 +340,11 @@ public class InventoryGUI extends javax.swing.JFrame {
         btnDetectLowStock.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnDetectLowStock.setForeground(new java.awt.Color(242, 242, 242));
         btnDetectLowStock.setText("Detect Low Stock");
+        btnDetectLowStock.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDetectLowStockActionPerformed(evt);
+            }
+        });
 
         btnClear.setBackground(new java.awt.Color(158, 158, 158));
         btnClear.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -356,26 +374,27 @@ public class InventoryGUI extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(17, 17, 17)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(17, 17, 17)
+                                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 284, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(18, 18, 18)
                         .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(btnAddStock)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGap(33, 33, 33)
                         .addComponent(btnUpdateStock)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnCheckAvailability)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGap(35, 35, 35)
                         .addComponent(btnDetectLowStock)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGap(30, 30, 30)
                         .addComponent(btnClear)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGap(18, 18, 18)
                         .addComponent(btnBack)))
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addGap(0, 28, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -385,206 +404,337 @@ public class InventoryGUI extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                        .addGap(18, 18, 18)
+                        .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(66, 66, 66))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(132, 132, 132)))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnAddStock)
                     .addComponent(btnUpdateStock)
-                    .addComponent(btnCheckAvailability)
                     .addComponent(btnDetectLowStock)
                     .addComponent(btnClear)
                     .addComponent(btnBack))
-                .addContainerGap(13, Short.MAX_VALUE))
+                .addContainerGap(12, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void cmbAvailabilityActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbAvailabilityActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_cmbAvailabilityActionPerformed
-
     private void btnAddStockActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddStockActionPerformed
-        try {
-            int inventoryID = readRequiredInt(txtInventoryID, "Inventory ID");
-            int productID = readRequiredInt(txtProductID, "Product ID");
-            String productName = readRequiredText(txtProductName, "Product Name");
-            String warehouseLocation = readRequiredText(txtWarehouseLocation, "Warehouse Location");
-            Integer currentQuantity = readOptionalInt(txtCurrentQuantity, "Current Quantity");
-            Integer addQuantity = readOptionalInt(txtAddQuantity, "Add Quantity");
-            Integer minimumStockLevel = readOptionalInt(txtMinimumStockLevel, "Minimum Stock Level");
+      try {
 
-            Inventory inventory = inventoryBoundary.addStock(
-                    inventoryID,
-                    productID,
-                    productName,
-                    warehouseLocation,
-                    currentQuantity,
-                    addQuantity,
-                    minimumStockLevel
-            );
+        // Required fields
+        if (isEmpty(txtProductID) ||
+            isEmpty(txtWarehouseLocation) ||
+            isEmpty(txtAddQuantity)) {
 
-            applyInventoryToForm(inventory);
-            javax.swing.JOptionPane.showMessageDialog(this,
-                    "Stock added successfully.",
-                    "Inventory Updated",
-                    javax.swing.JOptionPane.INFORMATION_MESSAGE);
-        } catch (IllegalArgumentException ex) {
-            javax.swing.JOptionPane.showMessageDialog(this,
-                    ex.getMessage(),
-                    "Validation Error",
-                    javax.swing.JOptionPane.ERROR_MESSAGE);
-        } catch (Exception ex) {
-            javax.swing.JOptionPane.showMessageDialog(this,
-                    "Unexpected error while adding stock.",
-                    "Inventory Error",
-                    javax.swing.JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this,
+                    "Please fill Product ID, Warehouse Location and Quantity first.",
+                    "Missing Data",
+                    JOptionPane.WARNING_MESSAGE);
+            return;
         }
+
+        int productID =
+                Integer.parseInt(txtProductID.getText().trim());
+
+        String location =
+                txtWarehouseLocation.getText().trim();
+
+        int addQty =
+                Integer.parseInt(txtAddQuantity.getText().trim());
+
+        if (addQty <= 0) {
+
+            JOptionPane.showMessageDialog(this,
+                    "Quantity must be greater than zero.");
+            return;
+        }
+
+        try (Connection con = DBConnection.connect()) {
+
+            // Search by Product ID (not inventory_id)
+            String checkSql =
+            "SELECT quantity FROM inventory WHERE product_id=?";
+
+            PreparedStatement check =
+                    con.prepareStatement(checkSql);
+
+            check.setInt(1, productID);
+
+            ResultSet rs = check.executeQuery();
+
+            if (rs.next()) {
+
+                // Product exists -> add quantity
+                String updateSql =
+                "UPDATE inventory SET quantity = quantity + ?, "
+              + "warehouse_location=?, "
+              + "last_updated=NOW() "
+              + "WHERE product_id=?";
+
+                PreparedStatement ps =
+                        con.prepareStatement(updateSql);
+
+                ps.setInt(1, addQty);
+                ps.setString(2, location);
+                ps.setInt(3, productID);
+
+                ps.executeUpdate();
+
+                JOptionPane.showMessageDialog(this,
+                        "Stock added successfully.");
+
+            } else {
+
+                // New product in inventory
+                String insertSql =
+                "INSERT INTO inventory(product_id,warehouse_location,quantity,availability,stock_condition,last_updated) "
+              + "VALUES(?,?,?,?,?,NOW())";
+
+                PreparedStatement ps =
+                        con.prepareStatement(insertSql);
+
+                ps.setInt(1, productID);
+                ps.setString(2, location);
+                ps.setInt(3, addQty);
+                ps.setString(4, "Available");
+                ps.setString(5, "In Stock");
+
+                ps.executeUpdate();
+
+                JOptionPane.showMessageDialog(this,
+                        "New inventory record added.");
+            }
+
+            loadInventoryByProductID(productID);
+        }
+
+    } catch (NumberFormatException e) {
+
+        JOptionPane.showMessageDialog(this,
+                "Product ID and Quantity must be numbers.");
+
+    } catch (Exception e) {
+
+        JOptionPane.showMessageDialog(this,
+                e.getMessage(),
+                "Error",
+                JOptionPane.ERROR_MESSAGE);
+    }
     }//GEN-LAST:event_btnAddStockActionPerformed
 
     private void btnUpdateStockActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateStockActionPerformed
-        try {
-            int inventoryID = readRequiredInt(txtInventoryID, "Inventory ID");
-            int productID = readRequiredInt(txtProductID, "Product ID");
-            String productName = readRequiredText(txtProductName, "Product Name");
-            String warehouseLocation = readRequiredText(txtWarehouseLocation, "Warehouse Location");
-            int currentQuantity = readRequiredInt(txtCurrentQuantity, "Current Quantity");
-            Integer minimumStockLevel = readOptionalInt(txtMinimumStockLevel, "Minimum Stock Level");
+      
+       try {
 
-            Inventory inventory = inventoryBoundary.updateStock(
-                    inventoryID,
-                    productID,
-                    productName,
-                    warehouseLocation,
-                    currentQuantity,
-                    minimumStockLevel
-            );
-
-            applyInventoryToForm(inventory);
-            javax.swing.JOptionPane.showMessageDialog(this,
-                    "Stock updated successfully.",
-                    "Inventory Updated",
-                    javax.swing.JOptionPane.INFORMATION_MESSAGE);
-        } catch (IllegalArgumentException ex) {
-            javax.swing.JOptionPane.showMessageDialog(this,
-                    ex.getMessage(),
-                    "Validation Error",
-                    javax.swing.JOptionPane.ERROR_MESSAGE);
-        } catch (Exception ex) {
-            javax.swing.JOptionPane.showMessageDialog(this,
-                    "Unexpected error while updating stock.",
-                    "Inventory Error",
-                    javax.swing.JOptionPane.ERROR_MESSAGE);
+        // Check required fields
+        if (isEmpty(txtProductID) || isEmpty(txtCurrentQuantity)) {
+            JOptionPane.showMessageDialog(this,
+                    "Please enter Product ID and Current Quantity first.");
+            return;
         }
+
+        int productId = Integer.parseInt(
+                txtProductID.getText().trim());
+
+        int newQty = Integer.parseInt(
+                txtCurrentQuantity.getText().trim());
+
+        if (newQty < 0) {
+            JOptionPane.showMessageDialog(this,
+                    "Quantity cannot be negative.");
+            return;
+        }
+
+        try (Connection con = DBConnection.connect()) {
+
+            // check if product exists in inventory
+            String checkSql =
+                    "SELECT * FROM inventory WHERE product_id=?";
+            PreparedStatement check =
+                    con.prepareStatement(checkSql);
+
+            check.setInt(1, productId);
+
+            ResultSet rs = check.executeQuery();
+
+            if (rs.next()) {
+
+                String updateSql =
+                "UPDATE inventory SET quantity=?, last_updated=NOW() WHERE product_id=?";
+
+                PreparedStatement ps =
+                        con.prepareStatement(updateSql);
+
+                ps.setInt(1, newQty);
+                ps.setInt(2, productId);
+
+                ps.executeUpdate();
+
+                JOptionPane.showMessageDialog(this,
+                        "Stock updated successfully.");
+
+                loadInventoryByProductID(productId);
+
+            } else {
+
+                JOptionPane.showMessageDialog(this,
+                        "This Product ID does not exist in inventory.");
+
+            }
+        }
+
+    } catch (NumberFormatException e) {
+
+        JOptionPane.showMessageDialog(this,
+                "Product ID and Quantity must be numbers.");
+
+    } catch (Exception e) {
+
+        JOptionPane.showMessageDialog(this,
+                e.getMessage(),
+                "Error",
+                JOptionPane.ERROR_MESSAGE);
+    }
     }//GEN-LAST:event_btnUpdateStockActionPerformed
 
-    private void btnCheckAvailabilityActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCheckAvailabilityActionPerformed
-        try {
-            int inventoryID = readRequiredInt(txtInventoryID, "Inventory ID");
-            int productID = readRequiredInt(txtProductID, "Product ID");
-            String productName = readRequiredText(txtProductName, "Product Name");
-            String warehouseLocation = readRequiredText(txtWarehouseLocation, "Warehouse Location");
-            Integer currentQuantity = readOptionalInt(txtCurrentQuantity, "Current Quantity");
-            Integer minimumStockLevel = readOptionalInt(txtMinimumStockLevel, "Minimum Stock Level");
-
-            Inventory inventory = inventoryBoundary.checkAvailability(
-                    inventoryID,
-                    productID,
-                    productName,
-                    warehouseLocation,
-                    currentQuantity,
-                    minimumStockLevel
-            );
-
-            applyInventoryToForm(inventory);
-            javax.swing.JOptionPane.showMessageDialog(this,
-                    "Availability checked: " + inventory.getAvailability(),
-                    "Inventory Status",
-                    javax.swing.JOptionPane.INFORMATION_MESSAGE);
-        } catch (IllegalArgumentException ex) {
-            javax.swing.JOptionPane.showMessageDialog(this,
-                    ex.getMessage(),
-                    "Validation Error",
-                    javax.swing.JOptionPane.ERROR_MESSAGE);
-        } catch (Exception ex) {
-            javax.swing.JOptionPane.showMessageDialog(this,
-                    "Unexpected error while checking availability.",
-                    "Inventory Error",
-                    javax.swing.JOptionPane.ERROR_MESSAGE);
-        }
-    }//GEN-LAST:event_btnCheckAvailabilityActionPerformed
-
     private void btnDetectLowStockActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDetectLowStockActionPerformed
-        try {
-            int inventoryID = readRequiredInt(txtInventoryID, "Inventory ID");
-            int productID = readRequiredInt(txtProductID, "Product ID");
-            String productName = readRequiredText(txtProductName, "Product Name");
-            String warehouseLocation = readRequiredText(txtWarehouseLocation, "Warehouse Location");
-            Integer currentQuantity = readOptionalInt(txtCurrentQuantity, "Current Quantity");
-            Integer minimumStockLevel = readOptionalInt(txtMinimumStockLevel, "Minimum Stock Level");
+  
+       try {
 
-            Inventory inventory = inventoryBoundary.detectLowStock(
-                    inventoryID,
-                    productID,
-                    productName,
-                    warehouseLocation,
-                    currentQuantity,
-                    minimumStockLevel
-            );
+        if (isEmpty(txtProductID) ||
+            isEmpty(txtWarehouseLocation)) {
 
-            applyInventoryToForm(inventory);
-            javax.swing.JOptionPane.showMessageDialog(this,
-                    inventory.getLowStockNotes(),
-                    "Stock Check",
-                    javax.swing.JOptionPane.INFORMATION_MESSAGE);
-        } catch (IllegalArgumentException ex) {
-            javax.swing.JOptionPane.showMessageDialog(this,
-                    ex.getMessage(),
-                    "Validation Error",
-                    javax.swing.JOptionPane.ERROR_MESSAGE);
-        } catch (Exception ex) {
-            javax.swing.JOptionPane.showMessageDialog(this,
-                    "Unexpected error while detecting low stock.",
-                    "Inventory Error",
-                    javax.swing.JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this,
+                    "Please enter Product ID and Warehouse Location first.");
+            return;
         }
+
+        int productId =
+                Integer.parseInt(
+                txtProductID.getText().trim());
+
+        String location =
+                txtWarehouseLocation.getText().trim();
+
+        try (Connection con = DBConnection.connect()) {
+
+            String sql =
+            "SELECT quantity, stock_condition " +
+            "FROM inventory " +
+            "WHERE product_id=? AND warehouse_location=?";
+
+            PreparedStatement ps =
+                    con.prepareStatement(sql);
+
+            ps.setInt(1, productId);
+            ps.setString(2, location);
+
+            ResultSet rs =
+                    ps.executeQuery();
+
+            if (rs.next()) {
+
+                int qty =
+                        rs.getInt("quantity");
+
+                String condition =
+                        rs.getString(
+                        "stock_condition");
+
+                txtCurrentQuantity.setText(
+                        String.valueOf(qty));
+
+                cmbStockCondition.setSelectedItem(
+                        condition);
+
+                int min = 5;
+
+                if (condition.equalsIgnoreCase(
+                        "Damaged")) {
+
+                    jTextArea1.setText(
+                            "Product is damaged.");
+
+                    JOptionPane.showMessageDialog(
+                            this,
+                            "Damaged product.");
+
+                } else if (condition.equalsIgnoreCase(
+                        "Expired")) {
+
+                    jTextArea1.setText(
+                            "Product is expired.");
+
+                    JOptionPane.showMessageDialog(
+                            this,
+                            "Expired product.");
+
+                } else if (qty <= min) {
+
+                    jTextArea1.setText(
+                            "Low stock detected.");
+
+                    JOptionPane.showMessageDialog(
+                            this,
+                            "Low stock.");
+
+                } else {
+
+                    jTextArea1.setText(
+                            "Stock is within safe range.");
+
+                    JOptionPane.showMessageDialog(
+                            this,
+                            "Stock level is safe.");
+                }
+
+            } else {
+
+                JOptionPane.showMessageDialog(
+                        this,
+                        "No matching product found in this warehouse.");
+            }
+
+        }
+
+    } catch (NumberFormatException e) {
+
+        JOptionPane.showMessageDialog(
+                this,
+                "Product ID must be a number.");
+
+    } catch (Exception e) {
+
+        JOptionPane.showMessageDialog(
+                this,
+                e.getMessage());
+    }
     }//GEN-LAST:event_btnDetectLowStockActionPerformed
 
     private void btnClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClearActionPerformed
-        txtInventoryID.setText("");
-        txtProductID.setText("");
-        txtProductName.setText("");
-        txtWarehouseLocation.setText("");
-        txtCurrentQuantity.setText("");
-        txtAddQuantity.setText("");
-        txtMinimumStockLevel.setText("");
-        txtLastUpdated.setText("");
-        jTextArea1.setText("");
-        cmbAvailability.setSelectedIndex(0);
-        cmbStockCondition.setSelectedIndex(0);
+  
+    txtProductID.setText("");
+    txtWarehouseLocation.setText("");
+    txtCurrentQuantity.setText("");
+    txtAddQuantity.setText("");
+    txtProductName.setText("");
+    txtLastUpdated.setText("");
+
+    cmbStockCondition.setSelectedIndex(0);
+
+    jTextArea1.setText("");
+
+    JOptionPane.showMessageDialog(this,
+            "Fields cleared.");
     }//GEN-LAST:event_btnClearActionPerformed
 
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
-        try {
-            User currentUser = AppContext.getCurrentUser();
-            javax.swing.JFrame dashboard = currentUser == null
-                    ? new LoginGuii(AppContext.authBoundary())
-                    : AppContext.createDashboardForRole(currentUser.getRole());
-
-            if (dashboard == null) {
-                throw new IllegalStateException("No screen is mapped for the current role.");
-            }
-
-            dashboard.setVisible(true);
-            dispose();
-        } catch (Exception ex) {
-            javax.swing.JOptionPane.showMessageDialog(this,
-                    ex.getMessage(),
-                    "Navigation Error",
-                    javax.swing.JOptionPane.ERROR_MESSAGE);
-        }
+      new LoginGuii().setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_btnBackActionPerformed
 
     private int readRequiredInt(javax.swing.JTextField field, String fieldName) {
@@ -624,45 +774,81 @@ public class InventoryGUI extends javax.swing.JFrame {
         return value;
     }
 
-    private void applyInventoryToForm(Inventory inventory) {
-        if (inventory == null) {
-            return;
-        }
+   
+private void applyInventoryToForm(Inventory inventory) {
 
-        txtInventoryID.setText(String.valueOf(inventory.getInventoryID()));
-        txtProductID.setText(String.valueOf(inventory.getProductID()));
-        txtProductName.setText(safeText(inventory.getProductName()));
-        txtWarehouseLocation.setText(safeText(inventory.getWarehouseLocation()));
-        txtCurrentQuantity.setText(String.valueOf(inventory.getStockLevel()));
-        txtAddQuantity.setText("");
-        txtMinimumStockLevel.setText(String.valueOf(inventory.getReorderThreshold()));
-        txtLastUpdated.setText(safeText(inventory.getLastUpdated()));
-        jTextArea1.setText(safeText(inventory.getLowStockNotes()));
-
-        setComboValue(cmbAvailability, inventory.getAvailability());
-        setComboValue(cmbStockCondition, inventory.getStockCondition());
+    if (inventory == null) {
+        return;
     }
 
+    // removed txtInventoryID
+
+    txtProductID.setText(
+            String.valueOf(inventory.getProductID()));
+
+    txtProductName.setText(
+            safeText(inventory.getProductName()));
+
+    txtWarehouseLocation.setText(
+            safeText(inventory.getWarehouseLocation()));
+
+    txtCurrentQuantity.setText(
+            String.valueOf(inventory.getStockLevel()));
+
+    txtAddQuantity.setText("");
+
+    txtProductName.setText(
+            String.valueOf(inventory.getReorderThreshold()));
+
+    txtLastUpdated.setText(
+            safeText(inventory.getLastUpdated()));
+
+    jTextArea1.setText(
+            safeText(inventory.getLowStockNotes()));
+
+    // removed cmbAvailability
+    setComboValue(cmbStockCondition,
+            inventory.getStockCondition());
+}
     private void prefillFromProduct() {
-        if (productContext == null) {
-            return;
-        }
 
-        txtProductID.setText(String.valueOf(productContext.getProductID()));
-        txtProductName.setText(safeText(productContext.getProductName()));
-
-        Inventory inventory = productContext.getInventory();
-        if (inventory != null) {
-            txtInventoryID.setText(String.valueOf(inventory.getInventoryID()));
-            txtWarehouseLocation.setText(safeText(inventory.getWarehouseLocation()));
-            txtCurrentQuantity.setText(String.valueOf(inventory.getStockLevel()));
-            txtMinimumStockLevel.setText(String.valueOf(inventory.getReorderThreshold()));
-            txtLastUpdated.setText(safeText(inventory.getLastUpdated()));
-            jTextArea1.setText(safeText(inventory.getLowStockNotes()));
-            setComboValue(cmbAvailability, inventory.getAvailability());
-            setComboValue(cmbStockCondition, inventory.getStockCondition());
-        }
+    if (productContext == null) {
+        return;
     }
+
+    txtProductID.setText(
+            String.valueOf(productContext.getProductID()));
+
+    txtProductName.setText(
+            safeText(productContext.getProductName()));
+
+    Inventory inventory =
+            productContext.getInventory();
+
+    if (inventory != null) {
+
+        // removed txtInventoryID
+
+        txtWarehouseLocation.setText(
+                safeText(inventory.getWarehouseLocation()));
+
+        txtCurrentQuantity.setText(
+                String.valueOf(inventory.getStockLevel()));
+
+        txtProductName.setText(
+                String.valueOf(inventory.getReorderThreshold()));
+
+        txtLastUpdated.setText(
+                safeText(inventory.getLastUpdated()));
+
+        jTextArea1.setText(
+                safeText(inventory.getLowStockNotes()));
+
+        // removed cmbAvailability
+        setComboValue(cmbStockCondition,
+                inventory.getStockCondition());
+    }
+}
 
     private void setComboValue(javax.swing.JComboBox<String> comboBox, String value) {
         if (value == null || value.isBlank()) {
@@ -719,19 +905,14 @@ public class InventoryGUI extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAddStock;
     private javax.swing.JButton btnBack;
-    private javax.swing.JButton btnCheckAvailability;
     private javax.swing.JButton btnClear;
     private javax.swing.JButton btnDetectLowStock;
     private javax.swing.JButton btnUpdateStock;
-    private javax.swing.JComboBox<String> cmbAvailability;
     private javax.swing.JComboBox<String> cmbStockCondition;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
@@ -745,11 +926,10 @@ public class InventoryGUI extends javax.swing.JFrame {
     private javax.swing.JTextArea jTextArea1;
     private javax.swing.JTextField txtAddQuantity;
     private javax.swing.JTextField txtCurrentQuantity;
-    private javax.swing.JTextField txtInventoryID;
     private javax.swing.JTextField txtLastUpdated;
-    private javax.swing.JTextField txtMinimumStockLevel;
     private javax.swing.JTextField txtProductID;
     private javax.swing.JTextField txtProductName;
     private javax.swing.JTextField txtWarehouseLocation;
     // End of variables declaration//GEN-END:variables
 }
+

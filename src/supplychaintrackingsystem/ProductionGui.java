@@ -18,8 +18,19 @@ public class ProductionGui extends javax.swing.JFrame {
      */
     public ProductionGui() {
         initComponents();
+          
     }
 
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -32,11 +43,9 @@ public class ProductionGui extends javax.swing.JFrame {
         jPanel3 = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        txtRecordID = new javax.swing.JTextField();
         txtProductID = new javax.swing.JTextField();
         txtProductionDate = new javax.swing.JTextField();
         txtBatchNumber = new javax.swing.JTextField();
@@ -84,19 +93,11 @@ public class ProductionGui extends javax.swing.JFrame {
         jLabel1.setForeground(new java.awt.Color(51, 51, 255));
         jLabel1.setText("Production & Traceability System");
 
-        jLabel2.setText("Record ID");
-
         jLabel3.setText("Product ID");
 
         jLabel4.setText("Production Date");
 
         jLabel5.setText("Batch number");
-
-        txtRecordID.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtRecordIDActionPerformed(evt);
-            }
-        });
 
         txtProductID.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -214,17 +215,14 @@ public class ProductionGui extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addComponent(txtBatchNumber, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtRecordID, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtProductionDate, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtProductID, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
+                        .addComponent(txtProductID, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtProductionDate, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(22, 22, 22))
         );
@@ -234,19 +232,15 @@ public class ProductionGui extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel2)
-                            .addComponent(txtRecordID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel3)
                             .addComponent(txtProductID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(9, 9, 9)
+                        .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel4)
                             .addComponent(txtProductionDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(6, 6, 6)
+                        .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel5)
                             .addComponent(txtBatchNumber, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -429,7 +423,7 @@ public class ProductionGui extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(btnSendNotification, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(btnBack, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(48, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -454,11 +448,6 @@ public class ProductionGui extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void txtRecordIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtRecordIDActionPerformed
-        // TODO add your handling code here:
-         txtProductID.requestFocus();
-    }//GEN-LAST:event_txtRecordIDActionPerformed
 
     private void txtProductionDateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtProductionDateActionPerformed
         // TODO add your handling code here:
@@ -509,64 +498,125 @@ public class ProductionGui extends javax.swing.JFrame {
     }//GEN-LAST:event_cmbProductionStatusActionPerformed
 
     private void btnCreateRecordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreateRecordActionPerformed
-        // TODO add your handling code here: 
         try {
-        String batch = txtBatchNumber.getText();
-        String product = txtProductID.getText();
-        String status = cmbProductionStatus.getSelectedItem().toString();
 
-        if(batch.isEmpty() || product.isEmpty()){
-            JOptionPane.showMessageDialog(this,"Fill required fields");
+        if (txtProductID.getText().trim().isEmpty() ||
+            txtProductionDate.getText().trim().isEmpty() ||
+            txtBatchNumber.getText().trim().isEmpty()) {
+
+            JOptionPane.showMessageDialog(this,
+            "Fill required fields");
             return;
         }
 
+        int productId =
+        Integer.parseInt(txtProductID.getText().trim());
+
+        String date =
+        txtProductionDate.getText().trim();
+
+        String batch =
+        txtBatchNumber.getText().trim();
+
+        String quality =
+        cmbQualityCheck.getSelectedItem().toString();
+
+        String status =
+        cmbProductionStatus.getSelectedItem().toString();
+
+        String notes =
+        txtNotes.getText().trim();
+
         Connection con = DBConnection.connect();
 
-        String sql = "INSERT INTO production_records(batch_id,product_id,status) VALUES(?,?,?)";
+        String check =
+        "SELECT * FROM production_records " +
+        "WHERE batch_id=?";
 
-        PreparedStatement ps = con.prepareStatement(sql);
-        ps.setInt(1, Integer.parseInt(batch));
-        ps.setInt(2, Integer.parseInt(product));
-        ps.setString(3, status);
+        PreparedStatement ps1 =
+        con.prepareStatement(check);
+
+        ps1.setString(1, batch);
+
+        ResultSet rs = ps1.executeQuery();
+
+        if (rs.next()) {
+            JOptionPane.showMessageDialog(this,
+            "Batch Number already exists");
+            con.close();
+            return;
+        }
+
+        String sql =
+        "INSERT INTO production_records " +
+        "(batch_id, product_id, production_date, quality_check, status, notes) " +
+        "VALUES (?,?,?,?,?,?)";
+
+        PreparedStatement ps =
+        con.prepareStatement(sql);
+
+        ps.setString(1, batch);
+        ps.setInt(2, productId);
+        ps.setString(3, date);
+        ps.setString(4, quality);
+        ps.setString(5, status);
+        ps.setString(6, notes);
 
         ps.executeUpdate();
 
-        JOptionPane.showMessageDialog(this,"Production Record Created");
+        JOptionPane.showMessageDialog(this,
+        "Production Record Created");
 
         con.close();
 
-    } catch(Exception e){
-        JOptionPane.showMessageDialog(this,e.getMessage());
+    } catch (Exception e) {
+
+        JOptionPane.showMessageDialog(this,
+        e.getMessage());
     }
-        
     }//GEN-LAST:event_btnCreateRecordActionPerformed
 
     private void btnLinkMaterialsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLinkMaterialsActionPerformed
         // TODO add your handling code here:
-        try {
-        int id = Integer.parseInt(txtMaterialID.getText());
+         try {
+
+        int id =
+        Integer.parseInt(txtMaterialID.getText().trim());
 
         Connection con = DBConnection.connect();
 
-        String sql = "SELECT material_name, quantity FROM raw_materials WHERE material_id=?";
+        String sql =
+        "SELECT material_name, quantity " +
+        "FROM raw_materials WHERE material_id=?";
 
-        PreparedStatement ps = con.prepareStatement(sql);
-        ps.setInt(1,id);
+        PreparedStatement ps =
+        con.prepareStatement(sql);
+
+        ps.setInt(1, id);
 
         ResultSet rs = ps.executeQuery();
 
-        if(rs.next()){
-            txtMaterialName.setText(rs.getString("material_name"));
+        if (rs.next()) {
+
+            txtMaterialName.setText(
+            rs.getString("material_name"));
+
             JOptionPane.showMessageDialog(this,
-                "Available Quantity: " + rs.getInt("quantity"));
-        }else{
-            JOptionPane.showMessageDialog(this,"Material not found");
+            "Available Stock: " +
+            rs.getInt("quantity"));
+
+        } else {
+
+            JOptionPane.showMessageDialog(this,
+            "Material not found");
         }
 
         con.close();
 
-    } catch(Exception e){
-        JOptionPane.showMessageDialog(this,e.getMessage());
+    } catch (Exception e) {
+
+        JOptionPane.showMessageDialog(this,
+        "Enter valid Material ID");
     }
     }//GEN-LAST:event_btnLinkMaterialsActionPerformed
 
@@ -613,7 +663,7 @@ public class ProductionGui extends javax.swing.JFrame {
 
     private void btnClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClearActionPerformed
         // TODO add your handling code here:
-     txtRecordID.setText("");
+   
     txtProductionDate.setText("");
     txtBatchNumber.setText("");
     txtQuantityUsed.setText("");
@@ -679,7 +729,6 @@ public class ProductionGui extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -700,6 +749,5 @@ public class ProductionGui extends javax.swing.JFrame {
     private javax.swing.JTextField txtProductID;
     private javax.swing.JTextField txtProductionDate;
     private javax.swing.JTextField txtQuantityUsed;
-    private javax.swing.JTextField txtRecordID;
     // End of variables declaration//GEN-END:variables
 }
