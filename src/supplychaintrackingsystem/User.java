@@ -326,7 +326,7 @@ public class User {
                 "Logistics",
                 "Administrator",
                 "System Administrator",
-                "SystemAdministrator",
+                "Distributor",
                 "Regulator"
         );
 
