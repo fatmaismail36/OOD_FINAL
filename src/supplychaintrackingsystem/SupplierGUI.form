@@ -35,7 +35,6 @@
                               <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
                           </Group>
                       </Group>
-                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Component id="jPanel4" min="-2" pref="270" max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
@@ -165,7 +164,7 @@
                                   <EmptySpace type="separate" max="-2" attributes="0"/>
                                   <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace max="32767" attributes="0"/>
-                                  <Component id="jTextField1" min="-2" pref="71" max="-2" attributes="0"/>
+                                  <Component id="txtCompanyName" min="-2" pref="71" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                       </Group>
@@ -187,7 +186,7 @@
                       <Component id="jLabel2" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="jLabel4" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="txtSupplierID" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="jTextField1" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="txtCompanyName" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
@@ -250,29 +249,17 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="txtEmail">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="jTextField1"/>
-          </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="txtSupplierID">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="jTextField1"/>
-          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtSupplierIDActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JTextField" name="txtSupplierName">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="jTextField1"/>
-          </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="txtContactNumber">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="jTextField2"/>
-          </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="jTextField1">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="jTextField1"/>
-          </Properties>
+        <Component class="javax.swing.JTextField" name="txtCompanyName">
         </Component>
       </SubComponents>
     </Container>
@@ -360,9 +347,6 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="txtMaterialID">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="jTextField2"/>
-          </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel8">
           <Properties>
@@ -373,9 +357,6 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="txtMaterialName">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="jTextField2"/>
-          </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel9">
           <Properties>
@@ -394,9 +375,6 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="txtQuantity">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="jTextField3"/>
-          </Properties>
         </Component>
         <Component class="javax.swing.JComboBox" name="cmbSupplyStatus">
           <Properties>
@@ -547,7 +525,7 @@
 
           <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
           <SubComponents>
-            <Component class="javax.swing.JTextArea" name="jTextArea1">
+            <Component class="javax.swing.JTextArea" name="txtNotes">
               <Properties>
                 <Property name="columns" type="int" value="20"/>
                 <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
@@ -571,6 +549,9 @@
         </Property>
         <Property name="text" type="java.lang.String" value="Supply Raw Material"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnSupplyRawMaterialActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="btnViewSupplyStatus">
       <Properties>
@@ -596,6 +577,9 @@
         </Property>
         <Property name="text" type="java.lang.String" value="Schedule Delivery    "/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnScheduleDeliveryActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="btnSendRequest">
       <Properties>
@@ -607,6 +591,9 @@
         </Property>
         <Property name="text" type="java.lang.String" value="Send Request"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnSendRequestActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="btnClear">
       <Properties>
@@ -618,6 +605,9 @@
         </Property>
         <Property name="text" type="java.lang.String" value="Clear"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnClearActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="btnBack">
       <Properties>
@@ -629,6 +619,9 @@
         </Property>
         <Property name="text" type="java.lang.String" value="Back"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnBackActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>

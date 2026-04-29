@@ -327,7 +327,8 @@ public class User {
                 "Administrator",
                 "System Administrator",
                 "SystemAdministrator",
-                "Regulator"
+                "Regulator",
+                 "Distributor"
         );
 
         if (!validRoles.contains(role.trim())) {
@@ -351,4 +352,10 @@ public class User {
                 + ", loggedIn=" + loggedIn
                 + '}';
     }
+
+
+
+
+
+
 }

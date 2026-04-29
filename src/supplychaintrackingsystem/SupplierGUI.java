@@ -4,19 +4,25 @@
  */
 package supplychaintrackingsystem;
 
-/**
- *
- * @author zeina
- */
+
 public class SupplierGUI extends javax.swing.JFrame {
+    private Supplier supplier;
 
-    /**
-     * Creates new form SupplierGUI
-     */
-    public SupplierGUI() {
-        initComponents();
-    }
+   public SupplierGUI(Supplier supplier) {
+    initComponents();
+    this.supplier = supplier;
+    loadSupplierData();
+    
+    
+}
 
+   private void loadSupplierData() {
+    txtSupplierID.setText(String.valueOf(supplier.getSupplierID()));
+    txtSupplierName.setText(supplier.getName());
+    txtEmail.setText(supplier.getEmail());
+    txtCompanyName.setText(supplier.getCompanyName());
+    txtContactNumber.setText(supplier.getContactNumber());
+}
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -38,7 +44,7 @@ public class SupplierGUI extends javax.swing.JFrame {
         txtSupplierID = new javax.swing.JTextField();
         txtSupplierName = new javax.swing.JTextField();
         txtContactNumber = new javax.swing.JTextField();
-        jTextField1 = new javax.swing.JTextField();
+        txtCompanyName = new javax.swing.JTextField();
         jPanel3 = new javax.swing.JPanel();
         jLabel7 = new javax.swing.JLabel();
         txtMaterialID = new javax.swing.JTextField();
@@ -55,7 +61,7 @@ public class SupplierGUI extends javax.swing.JFrame {
         cmbVerificationStatus = new javax.swing.JComboBox<>();
         cmbRequestType = new javax.swing.JComboBox<>();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
+        txtNotes = new javax.swing.JTextArea();
         btnSupplyRawMaterial = new javax.swing.JButton();
         btnViewSupplyStatus = new javax.swing.JButton();
         btnScheduleDelivery = new javax.swing.JButton();
@@ -105,15 +111,11 @@ public class SupplierGUI extends javax.swing.JFrame {
         jLabel6.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel6.setText("Email:");
 
-        txtEmail.setText("jTextField1");
-
-        txtSupplierID.setText("jTextField1");
-
-        txtSupplierName.setText("jTextField1");
-
-        txtContactNumber.setText("jTextField2");
-
-        jTextField1.setText("jTextField1");
+        txtSupplierID.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtSupplierIDActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -139,7 +141,7 @@ public class SupplierGUI extends javax.swing.JFrame {
                                 .addGap(18, 18, 18)
                                 .addComponent(jLabel4)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addComponent(txtCompanyName, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -154,7 +156,7 @@ public class SupplierGUI extends javax.swing.JFrame {
                     .addComponent(jLabel2)
                     .addComponent(jLabel4)
                     .addComponent(txtSupplierID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtCompanyName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel3)
@@ -174,20 +176,14 @@ public class SupplierGUI extends javax.swing.JFrame {
         jLabel7.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel7.setText("Material ID:");
 
-        txtMaterialID.setText("jTextField2");
-
         jLabel8.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel8.setText("Material Name:");
-
-        txtMaterialName.setText("jTextField2");
 
         jLabel9.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel9.setText("Quantity:");
 
         jLabel10.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel10.setText("Supply Status:");
-
-        txtQuantity.setText("jTextField3");
 
         cmbSupplyStatus.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Pending", "Supplied", "In Progress", "Rejected", "Delayed" }));
 
@@ -254,11 +250,11 @@ public class SupplierGUI extends javax.swing.JFrame {
 
         cmbRequestType.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Raw Material Supply", "Supplier Verification", "Delivery Schedule", "Support Request" }));
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setForeground(new java.awt.Color(102, 102, 102));
-        jTextArea1.setRows(5);
-        jTextArea1.setText("Please ensure the raw materials meet the\n standards required by the company.\n\n");
-        jScrollPane1.setViewportView(jTextArea1);
+        txtNotes.setColumns(20);
+        txtNotes.setForeground(new java.awt.Color(102, 102, 102));
+        txtNotes.setRows(5);
+        txtNotes.setText("Please ensure the raw materials meet the\n standards required by the company.\n\n");
+        jScrollPane1.setViewportView(txtNotes);
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -307,6 +303,11 @@ public class SupplierGUI extends javax.swing.JFrame {
         btnSupplyRawMaterial.setBackground(new java.awt.Color(76, 175, 80));
         btnSupplyRawMaterial.setForeground(new java.awt.Color(242, 242, 242));
         btnSupplyRawMaterial.setText("Supply Raw Material");
+        btnSupplyRawMaterial.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSupplyRawMaterialActionPerformed(evt);
+            }
+        });
 
         btnViewSupplyStatus.setBackground(new java.awt.Color(33, 150, 243));
         btnViewSupplyStatus.setForeground(new java.awt.Color(242, 242, 242));
@@ -320,18 +321,38 @@ public class SupplierGUI extends javax.swing.JFrame {
         btnScheduleDelivery.setBackground(new java.awt.Color(255, 152, 0));
         btnScheduleDelivery.setForeground(new java.awt.Color(242, 242, 242));
         btnScheduleDelivery.setText("Schedule Delivery    ");
+        btnScheduleDelivery.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnScheduleDeliveryActionPerformed(evt);
+            }
+        });
 
         btnSendRequest.setBackground(new java.awt.Color(121, 85, 72));
         btnSendRequest.setForeground(new java.awt.Color(242, 242, 242));
         btnSendRequest.setText("Send Request");
+        btnSendRequest.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSendRequestActionPerformed(evt);
+            }
+        });
 
         btnClear.setBackground(new java.awt.Color(158, 158, 158));
         btnClear.setForeground(new java.awt.Color(242, 242, 242));
         btnClear.setText("Clear");
+        btnClear.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnClearActionPerformed(evt);
+            }
+        });
 
         btnBack.setBackground(new java.awt.Color(96, 125, 139));
         btnBack.setForeground(new java.awt.Color(242, 242, 242));
         btnBack.setText("Back");
+        btnBack.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBackActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -347,7 +368,6 @@ public class SupplierGUI extends javax.swing.JFrame {
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(31, 31, 31)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(btnSupplyRawMaterial)
@@ -392,7 +412,100 @@ public class SupplierGUI extends javax.swing.JFrame {
 
     private void btnViewSupplyStatusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewSupplyStatusActionPerformed
         // TODO add your handling code here:
+ 
+    javax.swing.JOptionPane.showMessageDialog(
+        this,
+        "Verification Status: " + supplier.getVerificationStatus()
+        + "\nShipments Count: " + supplier.getShipments().size()
+        + "\nNotifications Count: " + supplier.viewNotifications().size()
+    );
+
     }//GEN-LAST:event_btnViewSupplyStatusActionPerformed
+
+    private void btnSupplyRawMaterialActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSupplyRawMaterialActionPerformed
+        // TODO add your handling code here:
+        
+    try {
+        String materialID = txtMaterialID.getText().trim();
+        String materialName = txtMaterialName.getText().trim();
+        String quantityText = txtQuantity.getText().trim();
+
+        if (materialID.isEmpty() || materialName.isEmpty() || quantityText.isEmpty()) {
+            throw new IllegalArgumentException("Please fill all material fields.");
+        }
+
+        int quantity = Integer.parseInt(quantityText);
+
+        if (quantity <= 0) {
+            throw new IllegalArgumentException("Quantity must be greater than 0.");
+        }
+
+        String materialData = "Material Name: " + materialName 
+                + ", Quantity: " + quantity 
+                + ", Status: " + cmbSupplyStatus.getSelectedItem();
+
+        RawMaterial material = new RawMaterial(materialID, materialData);
+
+        supplier.supplyRawMaterial(material);
+
+        javax.swing.JOptionPane.showMessageDialog(
+            this,
+            "Raw material supplied successfully.\n\n" + material.toString()
+        );
+
+    } catch (NumberFormatException e) {
+        javax.swing.JOptionPane.showMessageDialog(
+            this,
+            "Quantity must be a number."
+        );
+    } catch (Exception e) {
+        javax.swing.JOptionPane.showMessageDialog(
+            this,
+            "Error: " + e.getMessage()
+        );
+    }
+
+
+    }//GEN-LAST:event_btnSupplyRawMaterialActionPerformed
+
+    private void btnScheduleDeliveryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnScheduleDeliveryActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnScheduleDeliveryActionPerformed
+
+    private void btnSendRequestActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSendRequestActionPerformed
+        // TODO add your handling code here:
+       
+    supplier.requestAccountVerification();
+    cmbVerificationStatus.setSelectedItem(supplier.getVerificationStatus());
+
+    javax.swing.JOptionPane.showMessageDialog(
+        this,
+        "Verification request sent successfully."
+    );
+
+    }//GEN-LAST:event_btnSendRequestActionPerformed
+
+    private void btnClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClearActionPerformed
+        // TODO add your handling code here:
+        
+       
+    txtMaterialID.setText("");
+    txtMaterialName.setText("");
+    txtQuantity.setText("");
+    txtNotes.setText("");
+    cmbSupplyStatus.setSelectedIndex(0);
+    cmbRequestType.setSelectedIndex(0);
+
+    }//GEN-LAST:event_btnClearActionPerformed
+
+    private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
+        // TODO add your handling code here:
+            this.dispose();
+    }//GEN-LAST:event_btnBackActionPerformed
+
+    private void txtSupplierIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSupplierIDActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtSupplierIDActionPerformed
 
     /**
      * @param args the command line arguments
@@ -424,7 +537,7 @@ public class SupplierGUI extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new SupplierGUI().setVisible(true);
+               
             }
         });
     }
@@ -456,13 +569,13 @@ public class SupplierGUI extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextArea jTextArea1;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JTextField txtCompanyName;
     private javax.swing.JTextField txtContactNumber;
     private javax.swing.JTextField txtEmail;
     private javax.swing.JTextField txtMaterialID;
     private javax.swing.JTextField txtMaterialName;
     private javax.swing.JLabel txtMessageNotes;
+    private javax.swing.JTextArea txtNotes;
     private javax.swing.JTextField txtQuantity;
     private javax.swing.JTextField txtSupplierID;
     private javax.swing.JTextField txtSupplierName;

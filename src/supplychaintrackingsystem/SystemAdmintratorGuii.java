@@ -7,9 +7,13 @@ package supplychaintrackingsystem;
 
 public class SystemAdmintratorGuii extends javax.swing.JFrame {
 
-    private SystemAdministrator admin =
-        new SystemAdministrator(1, "Admin", "admin@gmail.com", "1234", "Admin");
-    
+    private SystemAdministrator admin;
+
+public SystemAdmintratorGuii(SystemAdministrator admin) {
+    initComponents();
+    this.admin = admin;
+}
+
     public SystemAdmintratorGuii() {
         initComponents();
     }
@@ -34,7 +38,6 @@ public class SystemAdmintratorGuii extends javax.swing.JFrame {
         txtName = new javax.swing.JTextField();
         txtEmail = new javax.swing.JTextField();
         txtPassword = new javax.swing.JTextField();
-        txtRole = new javax.swing.JTextField();
         btnAddUser = new javax.swing.JButton();
         btnUpdate = new javax.swing.JButton();
         btnDeactivate = new javax.swing.JButton();
@@ -56,6 +59,7 @@ public class SystemAdmintratorGuii extends javax.swing.JFrame {
         jLabel10 = new javax.swing.JLabel();
         txtSupplierName = new javax.swing.JTextField();
         btnAddSupplier = new javax.swing.JButton();
+        jComboBox1 = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -107,12 +111,6 @@ public class SystemAdmintratorGuii extends javax.swing.JFrame {
         txtPassword.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtPasswordActionPerformed(evt);
-            }
-        });
-
-        txtRole.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtRoleActionPerformed(evt);
             }
         });
 
@@ -251,6 +249,13 @@ public class SystemAdmintratorGuii extends javax.swing.JFrame {
             }
         });
 
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Adminstrator", "Supplier", "Manufacturer", "Distributor", "Retailer", "Customer", "Logistics" }));
+        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -268,7 +273,7 @@ public class SystemAdmintratorGuii extends javax.swing.JFrame {
                             .addComponent(txtUserID)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(15, 15, 15)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(btnAddUser, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -281,17 +286,17 @@ public class SystemAdmintratorGuii extends javax.swing.JFrame {
                                 .addGap(25, 25, 25)
                                 .addComponent(btnClear))
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addGroup(layout.createSequentialGroup()
-                                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                    .addComponent(txtPassword))
-                                .addGroup(layout.createSequentialGroup()
+                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                         .addComponent(jLabel4)
                                         .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                    .addComponent(txtRole, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                                    .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addGroup(layout.createSequentialGroup()
+                                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                    .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE))))))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(107, 107, 107)
@@ -373,8 +378,8 @@ public class SystemAdmintratorGuii extends javax.swing.JFrame {
                             .addComponent(txtSupplierName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txtRole, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel6))))
+                            .addComponent(jLabel6)
+                            .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(27, 27, 27)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnAddUser, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -453,8 +458,8 @@ public class SystemAdmintratorGuii extends javax.swing.JFrame {
         String name = txtName.getText();
         String email = txtEmail.getText();
         String password = txtPassword.getText();
-        String role = txtRole.getText();
-
+        
+        String role = jComboBox1.getSelectedItem().toString();
         User user = new User(id, name, email, password, role);
         admin.addUser(user);
 
@@ -490,7 +495,7 @@ public class SystemAdmintratorGuii extends javax.swing.JFrame {
         // TODO add your handling code here:
     try {
         int id = Integer.parseInt(txtUserID.getText());
-        String role = txtRole.getText();
+        String role = jComboBox1.getSelectedItem().toString();
 
         admin.managePermissions(id, role);
 
@@ -543,7 +548,7 @@ public class SystemAdmintratorGuii extends javax.swing.JFrame {
     txtName.setText("");
     txtEmail.setText("");
     txtPassword.setText("");
-    txtRole.setText("");
+    jComboBox1.setSelectedIndex(0);
     txtSupplierID.setText("");
     txtRequestType.setText("");
     txtAlertMessage.setText("");
@@ -617,13 +622,13 @@ public class SystemAdmintratorGuii extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtPasswordActionPerformed
 
-    private void txtRoleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtRoleActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtRoleActionPerformed
-
     private void txtSupplierNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSupplierNameActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtSupplierNameActionPerformed
+
+    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBox1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -672,6 +677,7 @@ public class SystemAdmintratorGuii extends javax.swing.JFrame {
     private javax.swing.JButton btnReviewVerification;
     private javax.swing.JButton btnSendRequest;
     private javax.swing.JButton btnUpdate;
+    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
@@ -690,7 +696,6 @@ public class SystemAdmintratorGuii extends javax.swing.JFrame {
     private javax.swing.JTextArea txtOutput;
     private javax.swing.JTextField txtPassword;
     private javax.swing.JTextField txtRequestType;
-    private javax.swing.JTextField txtRole;
     private javax.swing.JTextField txtSupplierID;
     private javax.swing.JTextField txtSupplierName;
     private javax.swing.JTextField txtUserID;

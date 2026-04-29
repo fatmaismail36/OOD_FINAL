@@ -3,16 +3,33 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package supplychaintrackingsystem;
-
+import javax.swing.JOptionPane;
 
 public class RetailerGUI extends javax.swing.JFrame {
 
    private Retailer retailer;
+   
+   private java.util.ArrayList<Product> products = new java.util.ArrayList<>();
+   private java.util.ArrayList<Shipment> shipments = new java.util.ArrayList<>();
+   private java.util.ArrayList<Distributor> distributors = new java.util.ArrayList<>();
+
+    
     public RetailerGUI() {
-        initComponents();
+    initComponents();
+    loadSystemData();
+}
+          
+         private void loadSystemData() {
+    distributors.add(new Distributor(1, "Alpha Distributor", "dist1@gmail.com", "Dist1234", "Distributor", "Cairo Warehouse"));
+    distributors.add(new Distributor(2, "Beta Distributor", "dist2@gmail.com", "Dist1234", "Distributor", "Giza Warehouse"));
+    distributors.add(new Distributor(3, "Gamma Distributor", "dist3@gmail.com", "Dist1234", "Distributor", "Alex Warehouse"));
+
+    cmbAssignedDistributor.removeAllItems();
+
+    for (Distributor d : distributors) {
+        cmbAssignedDistributor.addItem(d.getName());
     }
-
-
+}
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -49,7 +66,7 @@ public class RetailerGUI extends javax.swing.JFrame {
         cmbDeliveryStatus = new javax.swing.JComboBox<>();
         btnConfirmDelivery = new javax.swing.JButton();
         btnReqestStockView = new javax.swing.JButton();
-        btnCreateOrder = new javax.swing.JButton();
+        btnViewOrders = new javax.swing.JButton();
         btnClear = new javax.swing.JButton();
         btnBack = new javax.swing.JButton();
 
@@ -145,9 +162,12 @@ public class RetailerGUI extends javax.swing.JFrame {
                         .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtPhone)
-                            .addComponent(txtLocation)
-                            .addComponent(txtEmail))
+                            .addComponent(txtEmail, javax.swing.GroupLayout.DEFAULT_SIZE, 156, Short.MAX_VALUE)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(txtPhone, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 143, Short.MAX_VALUE)
+                                    .addComponent(txtLocation, javax.swing.GroupLayout.Alignment.LEADING))
+                                .addGap(0, 0, Short.MAX_VALUE)))
                         .addContainerGap())))
         );
         jPanel2Layout.setVerticalGroup(
@@ -199,7 +219,7 @@ public class RetailerGUI extends javax.swing.JFrame {
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(18, Short.MAX_VALUE)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jLabel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -231,7 +251,7 @@ public class RetailerGUI extends javax.swing.JFrame {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel14)
                     .addComponent(cmbAssignedDistributor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(14, Short.MAX_VALUE))
         );
 
         jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder(null, " Delivery Confirmation", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 12), new java.awt.Color(51, 204, 0))); // NOI18N
@@ -293,13 +313,13 @@ public class RetailerGUI extends javax.swing.JFrame {
             }
         });
 
-        btnCreateOrder.setBackground(new java.awt.Color(255, 152, 0));
-        btnCreateOrder.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        btnCreateOrder.setForeground(new java.awt.Color(242, 242, 242));
-        btnCreateOrder.setText("Create Order");
-        btnCreateOrder.addActionListener(new java.awt.event.ActionListener() {
+        btnViewOrders.setBackground(new java.awt.Color(255, 152, 0));
+        btnViewOrders.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnViewOrders.setForeground(new java.awt.Color(242, 242, 242));
+        btnViewOrders.setText("View order");
+        btnViewOrders.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnCreateOrderActionPerformed(evt);
+                btnViewOrdersActionPerformed(evt);
             }
         });
 
@@ -327,12 +347,9 @@ public class RetailerGUI extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addContainerGap())
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(6, 6, 6)
@@ -340,12 +357,15 @@ public class RetailerGUI extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnReqestStockView)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnCreateOrder)
+                        .addComponent(btnViewOrders)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnClear)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnBack)
-                        .addGap(8, 8, 8))))
+                        .addGap(8, 8, 8))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -355,17 +375,17 @@ public class RetailerGUI extends javax.swing.JFrame {
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(10, 10, 10)
+                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnConfirmDelivery)
                     .addComponent(btnReqestStockView)
-                    .addComponent(btnCreateOrder)
+                    .addComponent(btnViewOrders)
                     .addComponent(btnClear)
                     .addComponent(btnBack))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -406,21 +426,39 @@ public class RetailerGUI extends javax.swing.JFrame {
 
     private void btnConfirmDeliveryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfirmDeliveryActionPerformed
         // TODO add your handling code here:
-       
-    try {
+     try {
+        if (txtShipmentID.getText().trim().isEmpty()) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Enter shipment ID.");
+            return;
+        }
+
         createRetailerIfNeeded();
+        if (retailer == null) return;
 
-        int shipmentID = Integer.parseInt(txtShipmentID.getText());
+        int shipmentID = Integer.parseInt(txtShipmentID.getText().trim());
 
-        Shipment shipment = new Shipment(
-                shipmentID,
-                "Warehouse",
-                retailer.getStoreLocation(),
-                10,
-                100
-        );
+       Shipment shipment = null;
 
-        retailer.addShipment(shipment);
+for (Shipment s : shipments) {
+    if (s.getShipmentID() == shipmentID) {
+        shipment = s;
+        break;
+    }
+}
+
+if (shipment == null) {
+    shipment = new Shipment(
+            shipmentID,
+            "Warehouse",
+            retailer.getStoreLocation(),
+            10,
+            100
+    );
+    shipments.add(shipment);
+    retailer.addShipment(shipment);
+}
+
+       
         retailer.confirmDelivery(shipmentID);
 
         cmbDeliveryStatus.setSelectedItem("Received");
@@ -431,28 +469,30 @@ public class RetailerGUI extends javax.swing.JFrame {
     } catch (Exception e) {
         javax.swing.JOptionPane.showMessageDialog(this, e.getMessage());
     }
-
     }//GEN-LAST:event_btnConfirmDeliveryActionPerformed
 
     private void btnReqestStockViewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReqestStockViewActionPerformed
         // TODO add your handling code here:
+        
+        if (txtProductName.getText().trim().isEmpty()) {
+    JOptionPane.showMessageDialog(this, "Enter product name");
+    return;
+}
        
     try {
         createRetailerIfNeeded();
-
+       if (txtProductID.getText().trim().isEmpty()) {
+       JOptionPane.showMessageDialog(this, "Enter product ID");
+        return;
+}
         int productID = Integer.parseInt(txtProductID.getText());
         String productName = txtProductName.getText();
+        
+        Product product = findOrCreateProduct(productID, productName);
+retailer.addProduct(product);
 
-        Product product = new Product(
-                productID,
-                productName,
-                "General",
-                new java.util.Date(),
-                new java.util.Date(),
-                0.0
-        );
 
-        retailer.addProduct(product);
+        retailer.requestStockView();
 
         javax.swing.JOptionPane.showMessageDialog(this,
                 "Stock view requested.\n"
@@ -467,69 +507,77 @@ public class RetailerGUI extends javax.swing.JFrame {
 
     }//GEN-LAST:event_btnReqestStockViewActionPerformed
 
-    private void btnCreateOrderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreateOrderActionPerformed
+    private void btnViewOrdersActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewOrdersActionPerformed
         // TODO add your handling code here:
-       
+        
     try {
         createRetailerIfNeeded();
 
-        int productID = Integer.parseInt(txtProductID.getText());
-        String productName = txtProductName.getText();
-        int quantity = Integer.parseInt(txtRequestedQuantity.getText());
+        if (retailer == null) return;
 
-        Product product = new Product(
-                productID,
-                productName,
-                "General",
-                new java.util.Date(),
-                new java.util.Date(),
-                0.0
-        );
+        retailer.requestViewOrders();
 
-        retailer.addProduct(product);
-        retailer.requestCreateOrder(retailer.getProducts());
-
-        int distributorID = cmbAssignedDistributor.getSelectedIndex() + 1;
-        retailer.requestRestock(distributorID, productID, quantity);
-
-        javax.swing.JOptionPane.showMessageDialog(this,
-                "Order request created successfully.\n"
-                + "Product: " + productName + "\n"
-                + "Quantity: " + quantity + "\n"
-                + "Assigned Distributor: " + cmbAssignedDistributor.getSelectedItem());
-
+        JOptionPane.showMessageDialog(this,
+                "View orders request sent successfully.\n"
+                + "Retailer: " + retailer.getStoreName());
+        
     } catch (Exception e) {
-        javax.swing.JOptionPane.showMessageDialog(this, e.getMessage());
+        JOptionPane.showMessageDialog(this, e.getMessage());
     }
 
-    }//GEN-LAST:event_btnCreateOrderActionPerformed
+
+    }//GEN-LAST:event_btnViewOrdersActionPerformed
 
     
+   
     private void createRetailerIfNeeded() {
-    if (retailer != null) {
+
+    if (retailer != null) return;
+
+    if (txtRetailerID.getText().trim().isEmpty()
+            || txtRetailerName.getText().trim().isEmpty()
+            || txtEmail.getText().trim().isEmpty()
+            || txtShopName.getText().trim().isEmpty()
+            || txtPhone.getText().trim().isEmpty()
+            || txtLocation.getText().trim().isEmpty()) {
+
+        JOptionPane.showMessageDialog(this, "Please fill all retailer fields first.");
         return;
     }
 
-    int retailerID = Integer.parseInt(txtRetailerID.getText());
-    String name = txtRetailerName.getText();
-    String email = txtEmail.getText();
-    String phone = txtPhone.getText();
-    String shopName = txtShopName.getText();
-    String location = txtLocation.getText();
+    try {
+        int retailerID = Integer.parseInt(txtRetailerID.getText().trim());
 
-    retailer = new Retailer(
-            retailerID,
-            name,
-            email,
-            "1234",
-            "Retailer",
-            retailerID,
-            shopName,
-            phone,
-            location
-    );
+        retailer = new Retailer(
+                retailerID,
+                txtRetailerName.getText().trim(),
+                txtEmail.getText().trim(),
+                "Retail1234",
+                "Retailer",
+                retailerID,
+                txtShopName.getText().trim(),
+                txtPhone.getText().trim(),
+                txtLocation.getText().trim()
+        );
+
+    } catch (NumberFormatException e) {
+        JOptionPane.showMessageDialog(this, "Retailer ID must be a number.");
+    }
 }
     
+    private Product findOrCreateProduct(int productID, String productName) {
+    for (Product p : products) {
+        if (p.getProductID() == productID) {
+            return p;
+        }
+    }
+
+   Product product = findOrCreateProduct(productID, productName);
+
+
+    products.add(product);
+    return product;
+}
     
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
@@ -567,8 +615,8 @@ public class RetailerGUI extends javax.swing.JFrame {
     private javax.swing.JButton btnBack;
     private javax.swing.JButton btnClear;
     private javax.swing.JButton btnConfirmDelivery;
-    private javax.swing.JButton btnCreateOrder;
     private javax.swing.JButton btnReqestStockView;
+    private javax.swing.JButton btnViewOrders;
     private javax.swing.JComboBox<String> cmbAssignedDistributor;
     private javax.swing.JComboBox<String> cmbDeliveryStatus;
     private javax.swing.JLabel jLabel1;

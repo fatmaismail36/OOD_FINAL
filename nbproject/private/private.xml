@@ -3,23 +3,16 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/fatma/OneDrive/Desktop/OOD_FINAL/src/supplychaintrackingsystem/CustomerGUI.java</file>
-            <file>file:/C:/Users/fatma/OneDrive/Desktop/OOD_FINAL/src/supplychaintrackingsystem/SupplierGUI.java</file>
-            <file>file:/C:/Users/fatma/OneDrive/Desktop/OOD_FINAL/src/supplychaintrackingsystem/SupplierGuiiii.java</file>
-            <file>file:/C:/Users/fatma/OneDrive/Desktop/OOD_FINAL/src/supplychaintrackingsystem/OrderGUI.java</file>
-            <file>file:/C:/Users/fatma/OneDrive/Desktop/OOD_FINAL/src/supplychaintrackingsystem/LoginGuii.java</file>
-            <file>file:/C:/Users/fatma/OneDrive/Desktop/OOD_FINAL/src/supplychaintrackingsystem/InventoryGUI.java</file>
-            <file>file:/C:/Users/fatma/OneDrive/Desktop/OOD_FINAL/src/supplychaintrackingsystem/DistributorGUI.java</file>
-            <file>file:/C:/Users/fatma/OneDrive/Desktop/OOD_FINAL/src/supplychaintrackingsystem/SignUpGuiii.java</file>
-            <file>file:/C:/Users/fatma/OneDrive/Desktop/OOD_FINAL/src/supplychaintrackingsystem/UserrrGui.java</file>
-            <file>file:/C:/Users/fatma/OneDrive/Desktop/OOD_FINAL/src/supplychaintrackingsystem/UserController.java</file>
+            <file>file:/C:/Users/fatma/OneDrive/Desktop/OOD_FINAL/src/supplychaintrackingsystem/shipmentGuii.java</file>
             <file>file:/C:/Users/fatma/OneDrive/Desktop/OOD_FINAL/src/supplychaintrackingsystem/Shipment.java</file>
-            <file>file:/C:/Users/fatma/OneDrive/Desktop/OOD_FINAL/src/supplychaintrackingsystem/ShippingStrategy.java</file>
-            <file>file:/C:/Users/fatma/OneDrive/Desktop/OOD_FINAL/src/supplychaintrackingsystem/ProductionGui.java</file>
-            <file>file:/C:/Users/fatma/OneDrive/Desktop/OOD_FINAL/src/supplychaintrackingsystem/ShipmentController.java</file>
-            <file>file:/C:/Users/fatma/OneDrive/Desktop/OOD_FINAL/src/supplychaintrackingsystem/LogisticsController.java</file>
-            <file>file:/C:/Users/fatma/OneDrive/Desktop/OOD_FINAL/src/supplychaintrackingsystem/LogisticsUI.java</file>
-            <file>file:/C:/Users/fatma/OneDrive/Desktop/OOD_FINAL/src/supplychaintrackingsystem/AuthBoundary.java</file>
+            <file>file:/C:/Users/fatma/OneDrive/Desktop/OOD_FINAL/src/supplychaintrackingsystem/Retailer.java</file>
+            <file>file:/C:/Users/fatma/OneDrive/Desktop/OOD_FINAL/src/supplychaintrackingsystem/ManufactureGuiii.java</file>
+            <file>file:/C:/Users/fatma/OneDrive/Desktop/OOD_FINAL/src/supplychaintrackingsystem/RetailerGUI.java</file>
+            <file>file:/C:/Users/fatma/OneDrive/Desktop/OOD_FINAL/src/supplychaintrackingsystem/Distributor.java</file>
+            <file>file:/C:/Users/fatma/OneDrive/Desktop/OOD_FINAL/src/supplychaintrackingsystem/Manufacturer.java</file>
+            <file>file:/C:/Users/fatma/OneDrive/Desktop/OOD_FINAL/src/supplychaintrackingsystem/Product.java</file>
+            <file>file:/C:/Users/fatma/OneDrive/Desktop/OOD_FINAL/src/supplychaintrackingsystem/RawMaterial.java</file>
+            <file>file:/C:/Users/fatma/OneDrive/Desktop/OOD_FINAL/src/supplychaintrackingsystem/RawMaterial_Gui.java</file>
         </group>
     </open-files>
 </project-private>
